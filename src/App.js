@@ -1,18 +1,23 @@
 import './App.css';
-import Auth from '../src/components/Auth'
 import { Route, Routes } from 'react-router';
 import { Navbar } from './components/Navbar';
+import { Login } from './components/Auth/Login';
+import { Signup } from './components/Auth/Signup';
+import Profile from './components/Profile';
 import Footer from './components/Footer'
+
 
 function App() {
   return (
-    <div>
+    <>
       <Navbar/>
       <Routes>
-        <Route path='/auth' element={<Auth/>}/> 
+      <Route path='/profile' element={<Profile/>}/> 
+        <Route path='/login' element={<Login/>}/> 
+        <Route path='/signup' element={<Signup/>}/> 
       </Routes>  
       <Footer/>
-    </div>
+    </>
   );
 }
 
