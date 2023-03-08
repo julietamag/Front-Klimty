@@ -22,7 +22,7 @@ export const Signup = () => {
     <>
       <EmailInput setEmail={setEmail} />
       <PasswordInput setPassword={setPassword} />
-
+      
       <Button onClick={handleSignUp} variant="outlined">
         SignUP
       </Button>

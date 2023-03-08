@@ -1,9 +1,11 @@
 import { Typography } from "@mui/material";
 import React from "react";
+import { Link } from "react-router-dom";
 
 export const Logo = () => {
   return (
     <>
+  <Link style={{ textDecoration: "none" ,color:"#fff" }} to="/" >
       <Typography
         variant="h6"
         noWrap
@@ -21,6 +23,8 @@ export const Logo = () => {
       >
         KLIMTY
       </Typography>
+      </Link>
+      <Link  style={{ textDecoration: "none",color:"#fff" }}  to="/">
       <Typography
         variant="h5"
         noWrap
@@ -39,6 +43,7 @@ export const Logo = () => {
       >
         KLIMTY
       </Typography>
+      </Link>
     </>
   );
 };

@@ -1,6 +1,4 @@
 import './App.css';
-import Auth from '../src/components/Auth'
-
 import { Route, Routes } from 'react-router';
 import { Navbar } from './components/Navbar';
 import { Login } from './components/Auth/Login';
