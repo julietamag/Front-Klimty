@@ -1,3 +1,4 @@
+
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
@@ -7,6 +8,7 @@ import { Provider } from "react-redux";
 import store from "./state/store";
 import { ThemeProvider } from "@emotion/react";
 import {theme} from "../src/utils/themeConfig"
+
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
