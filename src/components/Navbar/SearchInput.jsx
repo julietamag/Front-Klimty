@@ -7,7 +7,7 @@ export const SearchInput = () => {
     <TextField
       color="secondary"
       id="filled-basic"
-      label="Filled"
+      label="Search"
       variant="filled"
     >
       <SearchOutlinedIcon />
