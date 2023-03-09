@@ -9,7 +9,7 @@ import {
 import MenuIcon from "@mui/icons-material/Menu";
 import React from "react";
 
-const pages = ["Products", "Pricing", "Blog"];
+const pages = ["Products", "Artists"];
 
 export const Menus = () => {
 
@@ -22,7 +22,7 @@ export const Menus = () => {
   };
 
   return (
-    <>
+    <div>
       <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
         <IconButton
           size="large"
@@ -72,6 +72,6 @@ export const Menus = () => {
           </Button>
         ))}
       </Box>
-    </>
+    </div>
   );
 };

@@ -4,21 +4,23 @@ import {
   IconButton,
   Menu,
   MenuItem,
+  MenuList,
   Tooltip,
 } from "@mui/material";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../utils/firebaseConfig";
 import { Link } from "react-router-dom";
 import { logOut } from "../../utils/functions";
 import { setUid } from "../../state/uid";
+import { setPhoto } from "../../state/photo";
 import { useDispatch,useSelector } from "react-redux";
 
 export const BoardUser = () => {
+  const photo = useSelector(state=>state.photo)
   const uid = useSelector(state=>state.uid)
   const dispath = useDispatch();
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
-  const [photo, setPhoto] = React.useState("");
+  const [anchorElUser, setAnchorElUser] = useState(null);
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
@@ -29,16 +31,16 @@ export const BoardUser = () => {
   const handleLogOut = () => {
     logOut(auth);
     dispath(setUid(""));
+    dispath(setPhoto("https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"))
   };
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
-      setPhoto(user.photoURL);
+      dispath(setPhoto(user?.photoURL));
     });
   }, []);
 
   return (
-    <>
       <Box sx={{ flexGrow: 0 }}>
         <Tooltip title="Open settings">
           <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
@@ -62,7 +64,7 @@ export const BoardUser = () => {
           onClose={handleCloseUserMenu}
         >
           {uid ? (
-            <>
+            <MenuList>
               <Link
                 style={{ textDecoration: "none", color: "#000" }}
                 to="profile"
@@ -72,9 +74,9 @@ export const BoardUser = () => {
               <Link style={{ textDecoration: "none", color: "#000" }} to="/">
                 <MenuItem onClick={handleLogOut}>Logout</MenuItem>
               </Link>
-            </>
+              </MenuList>
           ) : (
-            <>
+            <MenuList>
               <Link
                 style={{ textDecoration: "none", color: "#000" }}
                 to="signup"
@@ -87,10 +89,9 @@ export const BoardUser = () => {
               >
                 <MenuItem onClick={handleCloseUserMenu}>Login</MenuItem>
               </Link>
-            </>
+              </MenuList>
           )}
         </Menu>
       </Box>
-    </>
   );
 };
