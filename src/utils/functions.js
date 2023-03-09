@@ -23,7 +23,7 @@ export const logIn = (auth, email, password) => {
         sendEmailVerification(res.user.auth.currentUser);
         alert("your email is not verified");
         signOut(auth);
-      } 
+      }
   });
 };
 

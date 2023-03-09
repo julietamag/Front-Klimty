@@ -1,26 +1,25 @@
-import './App.css';
-import Auth from '../src/components/Auth'
-import { Route, Routes } from 'react-router';
-import { Navbar } from './components/Navbar';
-import Footer from './components/Footer'
-import ProductCard from './components/Card';
-
+import "./App.css";
+import { Route, Routes } from "react-router";
+import { Navbar } from "./components/Navbar";
+import { Login } from "./components/Auth/Login";
+import { SignupM } from "./components/Auth/SignupM";
+import Profile from "./components/Profile";
+import Footer from "./components/Footer";
+import {Home} from "./components/Home";
 
 function App() {
   return (
-    <div>
-      <Navbar/>
-      <ProductCard/>
-      <ProductCard/>
-      <ProductCard/>
-      <ProductCard/>
-      <ProductCard/>
-      <ProductCard/>
+    <>
+      <Navbar />
+
       <Routes>
-        <Route path='/auth' element={<Auth/>}/> 
-      </Routes>  
-      <Footer/>
-    </div>
+        <Route path="/" element={<Home/>} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<SignupM />} />
+      </Routes>
+      <Footer />
+    </>
   );
 }
 

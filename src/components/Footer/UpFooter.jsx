@@ -1,6 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
-
 import Box from "@mui/material/Box";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
@@ -14,27 +12,27 @@ const Demo = styled("div")(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
 }));
 
-const style = { textDecorationLine: "none", color: "#6e44ff"};
+const styleText = { textDecorationLine: "none", color: "#6e44ff"};
 
 const UpFooter = () => {
-  const [dense, setDense] = React.useState(false);
 
   return (
     <div>
       <Box sx={{ width: "100%", bgcolor: "background.paper" }}>
-        <Tabs centered>
+        <Tabs value={false} centered>
           <h4>ABOUT US</h4>
           <Tab label="" disabled></Tab>
           <Box sx={{ flexGrow: 1, maxWidth: 752 }}>
             <Grid container spacing={2}>
               <Grid item xs={12} md={6}>
                 <Demo>
-                  <List dense={dense}>
+                  <List dense={false}>
                     <ListItem>
                       <a
                         href="https://github.com/jalarg"
                         target="_blank"
-                        style={style}
+                        rel="noreferrer"
+                        style={styleText}
                       >
                         <ListItemText primary="Javier Lema" />
                       </a>
@@ -43,7 +41,8 @@ const UpFooter = () => {
                       <a
                         href="https://github.com/julietamag"
                         target="_blank"
-                        style={style}
+                        rel="noreferrer"
+                        style={styleText}
                       >
                         <ListItemText primary="Julieta Magnago" />
                       </a>
@@ -52,18 +51,21 @@ const UpFooter = () => {
                       <a
                         href="https://github.com/Marcosbit93"
                         target="_blank"
-                        style={style}
+                        rel="noreferrer"
+                        style={styleText}
                       >
                         <ListItemText primary="Marcos Bolonese" />
                       </a>
                     </ListItem>
                     <ListItem>
-                      <a href="https://github.com/NicholasInchauspe2" target="_blank" style={style}>
+                      <a href="https://github.com/NicholasInchauspe2" target="_blank" 
+                      rel="noreferrer" style={styleText}>
                         <ListItemText primary="Nicholas Inchauspe" />
                       </a>
                     </ListItem>
                     <ListItem>
-                      <a href="https://github.com/thep3Dr0" target="_blank" style={style}>
+                      <a href="https://github.com/thep3Dr0" target="_blank" 
+                      rel="noreferrer" style={styleText}>
                         <ListItemText primary="Pedro Ragni" />
                       </a>
                     </ListItem>
@@ -71,7 +73,8 @@ const UpFooter = () => {
                       <a
                         href="https://github.com/RosannaContasti"
                         target="_blank"
-                        style={style}
+                        rel="noreferrer"
+                        style={styleText}
                       >
                         <ListItemText primary="Rosanna Contasti" />
                       </a>
@@ -87,9 +90,10 @@ const UpFooter = () => {
             <Grid container spacing={2}>
               <Grid item xs={12} md={6}>
                 <Demo>
-                  <List dense={dense}>
+                  <List dense={false}>
                     <ListItem>
-                      <a href="" target="_blank" style={style}>
+                      <a href="https://github.com/germanriv" target="_blank" 
+                      rel="noreferrer" style={styleText}>
                         <ListItemText primary="German Rivarola" />
                       </a>
                     </ListItem>
@@ -104,12 +108,13 @@ const UpFooter = () => {
             <Grid container spacing={2}>
               <Grid item xs={12} md={6}>
                 <Demo>
-                  <List dense={dense}>
+                  <List dense={false}>
                     <ListItem>
                       <a
                         href="https://www.plataforma5.la/"
                         target="_blank"
-                        style={style}
+                        rel="noreferrer"
+                        style={styleText}
                       >
                         <ListItemText primary="PLATAFORMA 5" />
                       </a>

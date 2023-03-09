@@ -11,6 +11,8 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import AddShoppingCartOutlinedIcon from '@mui/icons-material/AddShoppingCartOutlined';
+import { useDispatch, useSelector } from "react-redux";
+import { setCart } from "../../state/cart";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -24,20 +26,26 @@ const ExpandMore = styled((props) => {
 }));
 
 const ProductCard = () => {
+  const detail =useSelector(state=>state.detail)
+  const dispatch = useDispatch()
+
   const [expanded, setExpanded] = React.useState(false);
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
 
+  const handleAddCart = () => {
+   dispatch(setCart(detail))
+  };
+
   return (
     <div>
       <Card sx={{ maxWidth: 345 }}>
-        <CardHeader title="name" subheader="artist_id" />
+        <CardHeader title={detail.title} subheader="artist_id" />
         <CardMedia
           component="img"
           height="194"
-          /////////// image={photo_url}
-          image="https://collectionapi.metmuseum.org/api/collection/v1/iiif/436535/796067/main-image"
+          image={detail.img}
           alt="Paella dish"
         />
         <CardContent>
@@ -53,7 +61,7 @@ const ProductCard = () => {
         </CardContent>
         <CardActions disableSpacing>
           <IconButton aria-label="add to favorites">
-            <AddShoppingCartOutlinedIcon />
+            <AddShoppingCartOutlinedIcon onClick={handleAddCart} />
           </IconButton>
           <ExpandMore
             expand={expanded}
