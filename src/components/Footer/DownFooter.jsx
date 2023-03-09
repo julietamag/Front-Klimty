@@ -18,7 +18,7 @@ const DownFooter = () => {
         sx={{
           marginTop: "calc(10% + 60px)",
           width: "100%",
-          position: "fixed",
+         //position: "fixed",
           bottom: 0,
           width: "100%",
         }}

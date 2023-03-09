@@ -89,7 +89,7 @@ const UpFooter = () => {
                 <Demo>
                   <List dense={dense}>
                     <ListItem>
-                      <a href="" target="_blank" style={style}>
+                      <a href="https://github.com/germanriv" target="_blank" style={style}>
                         <ListItemText primary="German Rivarola" />
                       </a>
                     </ListItem>
