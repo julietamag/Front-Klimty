@@ -6,8 +6,9 @@ import {
   SwipeableDrawer,
   ImageListItem,
   ImageListItemBar,
+  IconButton,
 } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import { dropCart } from "../../state/cart";
@@ -15,7 +16,7 @@ import { dropCart } from "../../state/cart";
 export const Cart = () => {
   const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
-  const [state, setState] = React.useState({
+  const [state, setState] = useState({
     top: false,
     left: false,
     bottom: false,
@@ -37,12 +38,12 @@ export const Cart = () => {
   const list = (anchor) => (
     <Box
       role="presentation"
-      onClick={toggleDrawer("right", false)}
+      onClick={toggleDrawer("right", true)}
       onKeyDown={toggleDrawer("right", false)}
     >
       <List>
-        {cart.map((product) => (
-          <ImageListItem sx={{ width: 200, height: 180 }} key={product.img}>
+        {cart?.map((product) => (
+          <ImageListItem sx={{ width: 250, height: 180 }} key={product.img}>
             <img
               src={`${product.img}?w=248&fit=crop&auto=format`}
               srcSet={`${product.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
@@ -52,12 +53,27 @@ export const Cart = () => {
             <ImageListItemBar
               title={product.title}
               //subtitle={item.artist}
+              actionIcon={
+              
+                <IconButton
+                onClick={() => {
+                  console.log(product)
+                  dispatch(dropCart(product))
+                }}
+                  aria-label={`info about ${product.title}`}
+                >
+                  <DeleteOutlineOutlinedIcon
+                  color="secondary"
+               
+                />
+                </IconButton>
+              }
             >
-              <DeleteOutlineOutlinedIcon
-                color="secondary"
-                onClick={()=>dispatch(dropCart(product))}
-              />
+              <Button>
+               
+              </Button>
             </ImageListItemBar>
+         
           </ImageListItem>
         ))}
       </List>

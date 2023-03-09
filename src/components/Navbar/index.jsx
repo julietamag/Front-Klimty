@@ -9,18 +9,16 @@ import { SearchInput } from "./SearchInput";
 import { Cart } from "./Cart";
 
 
-
 export const Navbar = () => {
-  
   return (
-    <AppBar position="sticky" sx={{mb:2}}>
+    <AppBar position="sticky" sx={{ mb: 2 }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Logo />
-          <Menus/>
-          <SearchInput/>
+          <Menus />
+          <SearchInput />
           <BoardUser />
-         <Cart/>
+          <Cart />
         </Toolbar>
       </Container>
     </AppBar>

@@ -4,10 +4,13 @@ import React from "react";
 
 export const SearchInput = () => {
   return (
-    <>
-      <TextField color="secondary" id="filled-basic" label="Filled" variant="filled">
-        <SearchOutlinedIcon />
-      </TextField>
-    </>
+    <TextField
+      color="secondary"
+      id="filled-basic"
+      label="Filled"
+      variant="filled"
+    >
+      <SearchOutlinedIcon />
+    </TextField>
   );
 };
