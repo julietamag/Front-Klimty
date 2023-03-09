@@ -5,7 +5,7 @@ export const dropCart = createAction("DROP_CART");
 
 const reducer = createReducer([], {
   [setCart]: (state, action) => [...state,action.payload],
-  [dropCart]: (state, action) => state.filter(el=>el!==action.payload),
+  [dropCart]: (state, action) => state.filter(el=>el.title!==action.payload.title),
 });
 
 export default reducer;

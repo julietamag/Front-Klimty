@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
@@ -8,19 +8,17 @@ import TwitterIcon from "@mui/icons-material/Twitter";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import Tabs from "@mui/material/Tabs";
-import UpFooter from './UpFooter';
-
+import UpFooter from "./UpFooter";
 
 const DownFooter = () => {
   return (
     <div>
-         <Paper
+      <Paper
         sx={{
           marginTop: "calc(10% + 60px)",
           width: "100%",
-         //position: "fixed",
+          //position: "fixed",
           bottom: 0,
-          width: "100%",
         }}
         component="footer"
         square
@@ -35,11 +33,13 @@ const DownFooter = () => {
               my: 1,
             }}
           >
-            <div>
+
+         { /*  <div>
               <image src="" width={75} height={30} alt="Logo" />
-            </div>
+          </div>*/}
+          
           </Box>
-          <UpFooter/>
+          <UpFooter />
           <Box
             sx={{
               flexGrow: 1,
@@ -49,20 +49,20 @@ const DownFooter = () => {
             }}
           >
             <Typography variant="caption" color="initial">
-              Copyright ©2023. [Klimty] 
+              Copyright ©2023. [Klimty]
             </Typography>
           </Box>
           <Box sx={{ width: "100%", bgcolor: "background.paper" }}>
-            <Tabs centered>
+            <Tabs value={false} centered>
               <TwitterIcon />
               <InstagramIcon />
-              <FacebookIcon />
+              <FacebookIcon />.
             </Tabs>
           </Box>
         </Container>
       </Paper>
     </div>
-  )
-}
+  );
+};
 
-export default DownFooter
+export default DownFooter;
