@@ -6,15 +6,25 @@ import {
   SwipeableDrawer,
   ImageListItem,
   ImageListItemBar,
+  Typography,
   IconButton,
 } from "@mui/material";
-import React, { useState } from "react";
+import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
+import React, { Fragment, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import { dropCart } from "../../state/cart";
+import axios from "axios";
+import Add from "@mui/icons-material/Add";
+import Remove from "@mui/icons-material/Remove";
 
 export const Cart = () => {
   const cart = useSelector((state) => state.cart);
+  const uid = useSelector((state) => state.uid);
+  const [userId, setUserid] = useState("");
+  // borrar
+  const [count, setCount] = React.useState(1);
+  //
   const dispatch = useDispatch();
   const [state, setState] = useState({
     top: false,
@@ -35,6 +45,11 @@ export const Cart = () => {
     setState({ ...state, [anchor]: open });
   };
 
+  // // GET USER ID
+  // axios.get(`http://localhost:3001/api/user/uid/${uid2}`)
+  // .then(user => setUserid(user.data.id))
+  // .catch(err => console.error(err))
+
   const list = (anchor) => (
     <Box
       role="presentation"
@@ -43,41 +58,65 @@ export const Cart = () => {
     >
       <List>
         {cart?.map((product) => (
-          <ImageListItem sx={{ width: 250, height: 180 }} key={product.img}>
+          <ImageListItem
+            sx={{ width: 400, height: 350 }}
+            key={product.photo_url}
+          >
             <img
-              src={`${product.img}?w=248&fit=crop&auto=format`}
-              srcSet={`${product.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
+              src={`${product.photo_url}?w=248&fit=crop&auto=format`}
+              srcSet={`${product.photo_url}?w=248&fit=crop&auto=format&dpr=2 2x`}
               alt={product.title}
               loading="lazy"
             />
             <ImageListItemBar
-              title={product.title}
-              //subtitle={item.artist}
+            sx={{display: 'flex', flexDirection:'column' , justifyContent: 'center', alignContent: 'center'}}
+              title={`${product.name}   ${product.price}$`}
               actionIcon={
-              
+                <>
+                <div style={{display: 'flex', flexDirection: 'row'}}>
+
+                 <IconButton
+                 color="secondary"
+                 size="sm"
+                 variant="outlined"
+                 onClick={() => setCount((c) => c - 1)}
+               >
+                 <Remove />
+               </IconButton>
+               <Typography fontWeight="md" color="secondary" >
+                 {count}
+               </Typography>
+               <IconButton
+                 color="secondary"
+                 size="sm"
+                 variant="outlined"
+                 onClick={() => setCount((c) => c + 1)}
+                 >
+                 <Add />
+               </IconButton>
+                 </div>
                 <IconButton
-                onClick={() => {
-                  console.log(product)
-                  dispatch(dropCart(product))
-                }}
-                  aria-label={`info about ${product.title}`}
+                  onClick={() => {
+                    dispatch(dropCart(product));
+                  }}
+                  aria-label={`info about ${product.name}`}
                 >
-                  <DeleteOutlineOutlinedIcon
-                  color="secondary"
-               
-                />
+                  <DeleteOutlineOutlinedIcon color="secondary" />
                 </IconButton>
+                 </>
               }
             >
-              <Button>
-               
-              </Button>
             </ImageListItemBar>
-         
           </ImageListItem>
         ))}
+    
       </List>
       <Divider />
+
+    <List sx={{ display: "flex", justifyContent:"space-evenly", alignContent:"center"}}>
+      <Button sx={{ fontSize: '1.5rem' }} >{'CHECKOUT'}</Button>
+      <Typography variant="subtitle1" sx={{ fontWeight: "bold", fontSize: "2rem" }}>{123456789}</Typography>
+    </List>
     </Box>
   );
 
@@ -86,7 +125,7 @@ export const Cart = () => {
       {["right"].map((anchor) => (
         <React.Fragment key={"right"}>
           <Button color="secondary" onClick={toggleDrawer("right", true)}>
-            {"right"}
+            {<ShoppingBasketIcon />}
           </Button>
           <SwipeableDrawer
             anchor={"right"}
