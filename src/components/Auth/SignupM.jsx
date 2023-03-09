@@ -19,9 +19,12 @@ import GoogleIcon from "@mui/icons-material/Google";
 
 export const SignupM = () => {
   const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [password, setPassword] = useState("");
-  const handleSignUp = () => {
-    signUp(auth, email, password);
+  const handleSignUp = (e) => {
+    e.preventDefault()
+    signUp(auth, email, password, name, lastName);
   };
   const handleSignUpGoogle = () => {
     signUpGoogle(auth);
@@ -39,9 +42,31 @@ export const SignupM = () => {
         }}
       >
         <Typography component="h1" variant="h5">
-          Sign in
+          Create Account
         </Typography>
         <Box component="form" onSubmit={handleSignUp} noValidate sx={{ mt: 1 }}>
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            id="name"
+            label="name"
+            name="name"
+            autoComplete="name"
+            autoFocus
+            onChange={(e) => setName(e.target.value)}
+          />
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            id="lastName"
+            label="lastName"
+            name="lastName"
+            autoComplete="lastName"
+            autoFocus
+            onChange={(e) => setLastName(e.target.value)}
+          />
           <TextField
             margin="normal"
             required
@@ -51,7 +76,7 @@ export const SignupM = () => {
             name="email"
             autoComplete="email"
             autoFocus
-            onChange={(e)=>setEmail(e.target.value)}
+            onChange={(e) => setEmail(e.target.value)}
           />
           <TextField
             margin="normal"
@@ -62,9 +87,9 @@ export const SignupM = () => {
             type="password"
             id="password"
             autoComplete="current-password"
-            onChange={(e)=>setPassword(e.target.value)}
+            onChange={(e) => setPassword(e.target.value)}
           />
-    
+
           <Button
             type="submit"
             fullWidth
@@ -72,9 +97,14 @@ export const SignupM = () => {
             sx={{ mt: 3, mb: 2 }}
             onClick={handleSignUp}
           >
-            Sign In
+         Create Account
           </Button>
-          <Button  sx={{ mt: 3, mb: 2 }} fullWidth onClick={handleSignUpGoogle} variant="outlined">
+          <Button
+            sx={{ mt: 3, mb: 2 }}
+            fullWidth
+            onClick={handleSignUpGoogle}
+            variant="outlined"
+          >
             <GoogleIcon /> SignUp with Google
           </Button>
           <Grid container>
