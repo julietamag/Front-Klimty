@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import { styled } from "@mui/material/styles";
 import Card from "@mui/material/Card";
@@ -13,6 +13,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import AddShoppingCartOutlinedIcon from '@mui/icons-material/AddShoppingCartOutlined';
 import { useDispatch, useSelector } from "react-redux";
 import { setCart } from "../../state/cart";
+import axios from "axios";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -27,17 +28,36 @@ const ExpandMore = styled((props) => {
 
 const ProductCard = () => {
   const detail =useSelector(state=>state.detail)
+  const uid = useSelector((state) => state.uid);
+  const [userId, setUserid] = useState('')
+  // borrar
+  const uid2 = "holahola"
+  //
   const dispatch = useDispatch()
 
   const [expanded, setExpanded] = React.useState(false);
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
+  
 
+  // // GET USER ID
+  // axios.get(`http://localhost:3001/api/user/uid/${uid2}`)
+  // .then(user => {setUserid(user.data.id)})
+  // .catch(err => console.error(err))
+  
   const handleAddCart = () => {
    dispatch(setCart(detail))
+  //  axios.post(`http://localhost:3001/api/cart/${userId}/add/${detail.id}`)
+  //  .then(res => {
+  //    console.log(res.data);
+  //    return res.data
+  // })
+   .catch(err => console.error(err))
   };
-console.log(detail); 
+
+
+
   return (
     <div>
       <Card sx={{ maxWidth: 345 }}>
