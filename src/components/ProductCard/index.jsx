@@ -37,26 +37,26 @@ const ProductCard = () => {
   const handleAddCart = () => {
    dispatch(setCart(detail))
   };
-
+console.log(detail); 
   return (
     <div>
       <Card sx={{ maxWidth: 345 }}>
-        <CardHeader title={detail.title} subheader="artist_id" />
+        <CardHeader title={detail?.name} subheader={detail?.artistId} />
         <CardMedia
           component="img"
           height="194"
-          image={detail.img}
+          image={detail?.photo_url}
           alt="Paella dish"
         />
         <CardContent>
         <Typography variant="body2" color="text.secondary">
-            PRICE
+            ${detail?.price}
           </Typography>
         <Typography variant="body2" color="text.secondary">
-            CATEGORY
+            {detail?.category}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            DESCRIPTION 
+            {detail?.description} 
           </Typography>
         </CardContent>
         <CardActions disableSpacing>
