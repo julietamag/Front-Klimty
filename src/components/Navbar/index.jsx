@@ -4,7 +4,7 @@ import Toolbar from "@mui/material/Toolbar";
 import Container from "@mui/material/Container";
 import { Logo } from "./Logo";
 import { BoardUser } from "./BoardUser";
-import { Menus } from "./Menus";
+// import { Menus } from "./Menus";
 import { SearchInput } from "./SearchInput";
 import { Cart } from "./Cart";
 
@@ -12,10 +12,10 @@ import { Cart } from "./Cart";
 export const Navbar = () => {
   return (
     <AppBar position="sticky" sx={{ mb: 2 }}>
-      <Container maxWidth="xl">
-        <Toolbar disableGutters>
+      <Container maxWidth="xl" >
+        <Toolbar disableGutters sx={{ width:'100%', display:'inline-flex', justifyContent:'space-between' }} >
           <Logo />
-          <Menus />
+          {/* <Menus /> */}
           <SearchInput />
           <BoardUser />
           <Cart />

@@ -16,15 +16,22 @@ export const ProductGrid = () => {
         (data) => setItemData(data.data)
       )
       .then(res => dispatch(setDetail(itemData[0])));
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  function handleProductClick(e, item) {
+
+    dispatch(setDetail(item))
+  }
+
+
   return (
-    <Masonry columns={4} spacing={2}>
+    <>
+    <Masonry columns={4} spacing={5} >
       {itemData?.map((item, index) => (
         <div key={index}>
-          <Label>{index + 1}</Label>
           <img
-            onClick={() => dispatch(setDetail(item))}
+            onClick={(e)=> handleProductClick(e, item)}
             src={`${item.photo_url}?w=162&auto=format`}
             srcSet={`${item.photo_url}?w=162&auto=format&dpr=2 2x`}
             alt={item.name}
@@ -39,5 +46,6 @@ export const ProductGrid = () => {
         </div>
       ))}
     </Masonry>
+            </>
   );
 };

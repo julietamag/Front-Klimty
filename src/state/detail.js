@@ -5,7 +5,10 @@ export const setDetail = createAction("SET_DETAIL");
 const reducer = createReducer(
   {},
   {
-    [setDetail]: (state, action) => action.payload,
+    [setDetail]: (state, action) => {
+      if(action.payload.id === state.id) return {}
+      else return action.payload
+    },
   }
 );
 
