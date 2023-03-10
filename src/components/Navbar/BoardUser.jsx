@@ -21,6 +21,7 @@ export const BoardUser = () => {
   const uid = useSelector(state=>state.uid)
   const dispath = useDispatch();
   const [anchorElUser, setAnchorElUser] = useState(null);
+  const userId = localStorage.getItem('id')
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
@@ -34,11 +35,7 @@ export const BoardUser = () => {
     dispath(setPhoto("https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"))
   };
 
-  useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      dispath(setPhoto(user?.photoURL));
-    });
-  }, []);
+
 
   return (
       <Box sx={{ flexGrow: 0 }}>
@@ -63,7 +60,7 @@ export const BoardUser = () => {
           open={Boolean(anchorElUser)}
           onClose={handleCloseUserMenu}
         >
-          {uid ? (
+          {userId ? (
             <MenuList>
               <Link
                 style={{ textDecoration: "none", color: "#000" }}
