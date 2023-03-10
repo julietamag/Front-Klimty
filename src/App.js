@@ -6,10 +6,13 @@ import { SignupM } from "./components/Auth/SignupM";
 import Profile from "./components/Profile";
 import Footer from "./components/Footer";
 import {Home} from "./components/Home";
+import toast, { Toaster } from 'react-hot-toast';
+
 
 function App() {
   return (
     <>
+    <div><Toaster/></div>
       <Navbar />
 
       <Routes>

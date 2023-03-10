@@ -22,11 +22,13 @@ import {
 import axios from "axios";
 import Add from "@mui/icons-material/Add";
 import Remove from "@mui/icons-material/Remove";
+import { useNavigate } from "react-router";
 
 export const Cart = () => {
   const cart = useSelector((state) => state.cart);
   const userId = localStorage.getItem("id");
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [totalAmount, setTotalAmount] = useState(0);
   const [state, setState] = useState({
     top: false,
@@ -52,8 +54,6 @@ export const Cart = () => {
       .get(`http://localhost:3001/api/cart/${userId}`)
       .then((cart) => {
         dispatch(setAxiosCart(cart.data.products));
-
-        setTotalAmount(cart.data.total_amount);
       })
       .catch((err) => console.error(err));
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -159,12 +159,19 @@ export const Cart = () => {
           alignContent: "center",
         }}
       >
-        <Button sx={{ fontSize: "1.5rem" }}>{"CHECKOUT"}</Button>
+        <Button
+          sx={{ fontSize: "1.5rem" }}
+          onClick={() => !userId && navigate("/login")}
+        >
+          {"CHECKOUT"}
+        </Button>
         <Typography
           variant="subtitle1"
           sx={{ fontWeight: "bold", fontSize: "2rem" }}
         >
-          {totalAmount}
+          {cart?.reduce((acc, item) => {
+            return acc + item.product.price * item.quantity;
+          }, 0)}
         </Typography>
       </List>
     </Box>
