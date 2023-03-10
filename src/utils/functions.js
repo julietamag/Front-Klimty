@@ -14,11 +14,13 @@ export const signUp = (auth, email, password, name, lastName) => {
   });
   onAuthStateChanged(auth, user => {
     if (user) {
-      sendEmailVerification(user);
-      const {uid} = user
-      axios.post("http://localhost:3001/api/user", { name, lastName, email, uid });
-      alert("We send you an email to verify it");
-      signOut(auth);
+      if(user.emailVerified === false){
+        sendEmailVerification(user);
+        const { uid } = user
+        axios.post("http://localhost:3001/api/user", { name, lastName, email, uid });
+        alert("We send you an email to verify it");
+        signOut(auth);
+      }
     } 
   })
 };
@@ -35,7 +37,7 @@ export const logIn = (auth, email, password) => {
  const userFilter =  users.data.filter((user)=> {
          return user.uid === userF.uid
       })
-      localStorage.setItem("id", userFilter[0].id);
+      localStorage.setItem("id", userFilter[0].id); 
         })
      
       });
