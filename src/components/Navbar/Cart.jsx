@@ -10,22 +10,19 @@ import {
   IconButton,
 } from "@mui/material";
 import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
-import { dropCart } from "../../state/cart";
+import { addQuantity, dropCart, minusQuantity, setAxiosCart } from "../../state/cart";
 import axios from "axios";
 import Add from "@mui/icons-material/Add";
 import Remove from "@mui/icons-material/Remove";
 
 export const Cart = () => {
   const cart = useSelector((state) => state.cart);
-  const uid = useSelector((state) => state.uid);
-  const [userId, setUserid] = useState("");
-  // borrar
-  const [count, setCount] = React.useState(1);
-  //
+  const userId = localStorage.getItem('id')
   const dispatch = useDispatch();
+  const [totalAmount, setTotalAmount] = useState(0)
   const [state, setState] = useState({
     top: false,
     left: false,
@@ -45,10 +42,35 @@ export const Cart = () => {
     setState({ ...state, [anchor]: open });
   };
 
-  // // GET USER ID
-  // axios.get(`http://localhost:3001/api/user/uid/${uid2}`)
-  // .then(user => setUserid(user.data.id))
-  // .catch(err => console.error(err))
+  useEffect(() => {
+    axios.get(`http://localhost:3001/api/cart/${userId}`)
+    .then(cart => {
+     dispatch(setAxiosCart(cart.data.products))
+     console.log(cart.data);
+     setTotalAmount(cart.data.total_amount)
+    })
+    .catch(err => console.error(err))
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  function handleAddQuantity(item) {
+    dispatch(addQuantity(item))
+    axios.post(`http://localhost:3001/api/cart/${userId}/update/${item.product.id}`, {products: cart})
+      .catch((err) => console.error(err));
+  }
+
+  function handleMinusQuantity(item) {
+    dispatch(minusQuantity(item))
+    axios.post(`http://localhost:3001/api/cart/${userId}/update/${item.product.id}`, {products: cart})
+      .catch((err) => console.error(err));
+  }
+
+  function handleDropCart(item){
+    dispatch(dropCart(item))
+    axios.post(`http://localhost:3001/api/cart/${userId}/update/${item.product.id}`, {products: cart})
+      .catch((err) => console.error(err));
+  }
+
 
   const list = (anchor) => (
     <Box
@@ -57,20 +79,20 @@ export const Cart = () => {
       onKeyDown={toggleDrawer("right", false)}
     >
       <List>
-        {cart?.map((product) => (
+        {cart?.map((item) => (
           <ImageListItem
             sx={{ width: 400, height: 350 }}
-            key={product.photo_url}
+            key={item.product.photo_url}
           >
             <img
-              src={`${product.photo_url}?w=248&fit=crop&auto=format`}
-              srcSet={`${product.photo_url}?w=248&fit=crop&auto=format&dpr=2 2x`}
-              alt={product.title}
+              src={`${item.product.photo_url}?w=248&fit=crop&auto=format`}
+              srcSet={`${item.product.photo_url}?w=248&fit=crop&auto=format&dpr=2 2x`}
+              alt={item.product.title}
               loading="lazy"
             />
             <ImageListItemBar
             sx={{display: 'flex', flexDirection:'column' , justifyContent: 'center', alignContent: 'center'}}
-              title={`${product.name}   ${product.price}$`}
+              title={`${item.product.name}   ${item.product.price}$`}
               actionIcon={
                 <>
                 <div style={{display: 'flex', flexDirection: 'row'}}>
@@ -79,27 +101,25 @@ export const Cart = () => {
                  color="secondary"
                  size="sm"
                  variant="outlined"
-                 onClick={() => setCount((c) => c - 1)}
+                 onClick={() => handleMinusQuantity(item)}
                >
                  <Remove />
                </IconButton>
                <Typography fontWeight="md" color="secondary" >
-                 {count}
+                 {item.quantity}
                </Typography>
                <IconButton
                  color="secondary"
                  size="sm"
                  variant="outlined"
-                 onClick={() => setCount((c) => c + 1)}
+                 onClick={() => handleAddQuantity(item)}
                  >
                  <Add />
                </IconButton>
                  </div>
                 <IconButton
-                  onClick={() => {
-                    dispatch(dropCart(product));
-                  }}
-                  aria-label={`info about ${product.name}`}
+                  onClick={() => handleDropCart(item)}
+                  aria-label={`info about ${item.product.name}`}
                 >
                   <DeleteOutlineOutlinedIcon color="secondary" />
                 </IconButton>
@@ -115,7 +135,7 @@ export const Cart = () => {
 
     <List sx={{ display: "flex", justifyContent:"space-evenly", alignContent:"center"}}>
       <Button sx={{ fontSize: '1.5rem' }} >{'CHECKOUT'}</Button>
-      <Typography variant="subtitle1" sx={{ fontWeight: "bold", fontSize: "2rem" }}>{123456789}</Typography>
+      <Typography variant="subtitle1" sx={{ fontWeight: "bold", fontSize: "2rem" }}>{totalAmount}</Typography>
     </List>
     </Box>
   );
