@@ -8,33 +8,30 @@ import {
 } from "firebase/auth";
 import { provider } from "./firebaseConfig";
 import axios from "axios";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 
 export const signUp = (auth, email, password, name, lastName) => {
-  createUserWithEmailAndPassword(auth, email, password).then((res) => {});
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      if (user.emailVerified === false) {
-        sendEmailVerification(user);
-        const { uid } = user;
+  createUserWithEmailAndPassword(auth, email, password)
+  .then(() => {
+      sendEmailVerification(auth.currentUser).then(() => {
+        const { uid } = auth.currentUser;
         axios.post("http://localhost:3001/api/user", {
           name,
           lastName,
           email,
           uid,
         });
-        alert("We send you an email to verify it");
+        toast.success(`We send you an email to ${email}`);
         signOut(auth);
-      }
-    }
-  });
+      });
+  })
 };
 
 export const logIn = (auth, email, password) => {
   signInWithEmailAndPassword(auth, email, password).then((res) => {
     if (!res.user.emailVerified) {
       sendEmailVerification(res.user.auth.currentUser);
-      alert("your email is not verified");
+      toast.error("your email is not verified");
       signOut(auth);
     } else {
       axios.get("http://localhost:3001/api/user").then((users) => {

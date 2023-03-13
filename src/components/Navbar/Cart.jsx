@@ -161,7 +161,7 @@ export const Cart = () => {
       >
         <Button
           sx={{ fontSize: "1.5rem" }}
-          onClick={() => !userId && navigate("/login")}
+          onClick={() => !userId ?  navigate("/login") : navigate('/checkout')}
         >
           {"CHECKOUT"}
         </Button>

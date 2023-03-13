@@ -7,6 +7,7 @@ import Profile from "./components/Profile";
 import Footer from "./components/Footer";
 import {Home} from "./components/Home";
 import toast, { Toaster } from 'react-hot-toast';
+import Checkout from "./components/Checkout/Checkout";
 
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/login" element={<LoginM />} />
         <Route path="/signup" element={<SignupM />} />
+        <Route path="/checkout" element={<Checkout />} />
       </Routes>
       <Footer />
     </>
