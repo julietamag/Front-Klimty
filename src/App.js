@@ -8,6 +8,7 @@ import Footer from "./components/Footer";
 import {Home} from "./components/Home";
 import toast, { Toaster } from 'react-hot-toast';
 import Checkout from "./components/Checkout/Checkout";
+import ErrorPage from "./components/ErrorPage";
 
 
 function App() {
@@ -15,13 +16,13 @@ function App() {
     <>
     <div><Toaster/></div>
       <Navbar />
-
       <Routes>
         <Route path="/" element={<Home/>} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/login" element={<LoginM />} />
         <Route path="/signup" element={<SignupM />} />
         <Route path="/checkout" element={<Checkout />} />
+        <Route path="*" element={<ErrorPage/>}/>
       </Routes>
       <Footer />
     </>
