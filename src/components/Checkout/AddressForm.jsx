@@ -1,17 +1,35 @@
-import * as React from 'react';
+import React, {useState} from 'react';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
+import { Box } from '@mui/material';
 
 export default function AddressForm() {
+
+    const [address2, setAddress2] = useState("");
+  const [name, setName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [address1, setAddress1] = useState(""); 
+
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    localStorage.setItem("address2", address2);
+    localStorage.setItem("name", name);
+    localStorage.setItem("lastName", lastName);
+    localStorage.setItem("address1", address1);
+  };
+
+
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
         Shipping address
       </Typography>
       <Grid container spacing={3}>
+      <Box component="form" onSubmit={handleSubmit}>
         <Grid item xs={12} sm={6}>
           <TextField
             required
@@ -21,6 +39,7 @@ export default function AddressForm() {
             fullWidth
             autoComplete="given-name"
             variant="standard"
+            onChange={(e) => setName(e.target.value)}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -32,6 +51,7 @@ export default function AddressForm() {
             fullWidth
             autoComplete="family-name"
             variant="standard"
+            onChange={(e) => setLastName(e.target.value)}
           />
         </Grid>
         <Grid item xs={12}>
@@ -43,6 +63,7 @@ export default function AddressForm() {
             fullWidth
             autoComplete="shipping address-line1"
             variant="standard"
+            onChange={(e) => setAddress1(e.target.value)}
           />
         </Grid>
         <Grid item xs={12}>
@@ -53,6 +74,7 @@ export default function AddressForm() {
             fullWidth
             autoComplete="shipping address-line2"
             variant="standard"
+            onChange={(e) => setAddress2(e.target.value)}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -103,6 +125,7 @@ export default function AddressForm() {
             label="Use this address for payment details"
           />
         </Grid>
+        </Box>
       </Grid>
     </React.Fragment>
   );
