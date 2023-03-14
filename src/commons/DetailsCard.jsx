@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-
+import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
@@ -10,13 +10,16 @@ import AddShoppingCartOutlinedIcon from "@mui/icons-material/AddShoppingCartOutl
 import ArrowBackIosNewOutlinedIcon from "@mui/icons-material/ArrowBackIosNewOutlined";
 import { useDispatch, useSelector } from "react-redux";
 import { setCart } from "../state/cart";
+// import { setDetail } from "../state/detail";
 import axios from "axios";
 
 const DetailsCard = () => {
-  const detail = useSelector((state) => state.detail);
+  // const detail = useSelector((state) => state.detail);
+  const [detail, setDetail] = useState({});
+  const cart = useSelector((state) => state.cart);
+  const location = useLocation();
   const dispatch = useDispatch();
   const userId = localStorage.getItem("id");
-  const cart = useSelector((state) => state.cart);
 
   const handleAddCart = () => {
     dispatch(setCart({ product: detail, quantity: 1 }));
@@ -25,6 +28,19 @@ const DetailsCard = () => {
   const handleOnClick = () => {
     window.history.back();
   };
+
+  // refreso de pagina
+  useEffect(() => {
+    axios
+      .get(
+        `http://localhost:3001/api/product/${location.pathname.split("/")[2]}`
+      )
+      .then((detail) => {
+        console.log("el detalle final", detail);
+        setDetail(detail.data);
+      })
+      .catch((err) => console.error(err));
+  }, []);
 
   useEffect(() => {
     axios
@@ -37,26 +53,28 @@ const DetailsCard = () => {
 
   return (
     <>
+      {console.log("DETAIL", detail)}
+      {console.log("LOCATION", location.pathname.split("/")[2])}
       <div style={{ display: "flex" }}>
         <CardMedia
           component="img"
           height="100%"
           image={detail?.photo_url}
           alt="print"
-          sx={{boxShadow: 10, width: 600, margin: 10 }}
+          sx={{ boxShadow: 10, width: 600, margin: 10 }}
         />
 
         <CardContent>
           <Divider
             orientation="vertical"
             textAlign="center"
-            sx={{ width: [100, 200, 300], mx:20 }}
+            sx={{ width: [100, 200, 300], mx: 20 }}
           >
             <Typography gutterBottom variant="h5" component="div">
               {detail?.name}
             </Typography>
             <Typography variant="h5" color="text.secondary">
-              {detail?.artist.title}
+              {detail?.artist?.title}
             </Typography>
             <Typography variant="subtitle1" color="text.secondary">
               ${detail?.price}
@@ -80,8 +98,8 @@ const DetailsCard = () => {
           <Typography paragraph>REVIEW TEXT.</Typography>
         </CardContent>
       </div>
-      <Button variant="text" onClick={handleOnClick} sx={{px:90}}>
-        <ArrowBackIosNewOutlinedIcon color="black"/> GO BACK
+      <Button variant="text" onClick={handleOnClick} sx={{ px: 90 }}>
+        <ArrowBackIosNewOutlinedIcon color="black" /> GO BACK
       </Button>
     </>
   );

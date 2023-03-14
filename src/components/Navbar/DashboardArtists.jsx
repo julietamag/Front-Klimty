@@ -1,5 +1,6 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router";
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
@@ -7,25 +8,34 @@ import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { setMenu } from "../../state/menu";
 import { setData } from "../../state/data";
+import { setType } from "../../state/type";
 
 const DashboardArtists = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const type = useSelector((state) => state.type);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
     dispatch(setMenu("artist"));
   };
+
+  // Search the artists artworks [1]
   const handleClose = (data) => {
     setAnchorEl(null);
+    dispatch(setType(data));
     axios
       .get(`http://localhost:3001/api/search/artworks/${data}`)
       .then((res) => {
         dispatch(setData(res.data));
+      })
+      .then(() => {
+        navigate("/");
       });
   };
 
-  // busqueda de artistas
+  // Search artists [2]
   const [artists, setArtists] = useState([]);
   const menu = useSelector((state) => state.menu);
 

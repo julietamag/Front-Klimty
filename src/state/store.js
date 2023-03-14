@@ -7,6 +7,8 @@ import cartReducer from "./cart";
 import menuReducer from "./menu";
 import menuSelectionReducer from "./menuSelection";
 import dataReducer from "./data";
+import typeReducer from "./type";
+import searchReducer from "./search";
 
 const store = configureStore({
   reducer: {
@@ -17,6 +19,8 @@ const store = configureStore({
     menu: menuReducer,
     menuSelection: menuSelectionReducer,
     data: dataReducer,
+    type: typeReducer,
+    search: searchReducer,
   },
 });
 

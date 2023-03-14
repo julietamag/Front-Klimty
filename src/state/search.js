@@ -1,9 +1,9 @@
 import { createAction, createReducer } from "@reduxjs/toolkit";
 
-export const setMenu = createAction("SET_MENU");
+export const setSearch = createAction("SET_SEARCH");
 
-const reducer = createReducer("general", {
-  [setMenu]: (state, action) => {
+const reducer = createReducer("", {
+  [setSearch]: (state, action) => {
     return action.payload;
   },
 });
