@@ -53,7 +53,7 @@ const ProductCard = () => {
   return (
     <div>
       <Card sx={{ maxWidth: 345 }}>
-        <CardHeader title={detail?.name} subheader={detail?.artistId} />
+        <CardHeader title={detail?.name} subheader={detail?.artist.title} />
         <CardMedia
           component="img"
           height="194"

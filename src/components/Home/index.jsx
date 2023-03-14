@@ -1,22 +1,25 @@
-import { Grid } from "@mui/material";
 import React from "react";
-import ProductCard from "../ProductCard";
+
 import { ProductGrid } from "../ProductGrid";
-import { useSelector } from "react-redux";
+import { Grid } from "@mui/material";
+
+// import ProductCard from "../ProductCard";
+// import { useSelector } from "react-redux";
+// import DetailsCard from "../../commons/DetailsCard";
 
 export const Home = () => {
-  const photoCardDetail = useSelector((state) => state.detail);
+  // const photoCardDetail = useSelector((state) => state.detail);
 
 
   
 
   return (
     <Grid container sx={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-      {photoCardDetail.name && (
-        <Grid item xs={2}>
-          <ProductCard  />
-        </Grid>
-      )}
+      {/* {photoCardDetail.name && (
+        // <Grid item xs={2}>
+        //   <ProductCard  />
+        // </Grid>
+      )} */}
       <Grid item xs={12} sx={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
         <ProductGrid />
       </Grid>
