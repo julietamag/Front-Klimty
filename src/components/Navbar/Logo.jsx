@@ -2,13 +2,24 @@
 import { Typography } from "@mui/material";
 import React from "react";
 import { Link } from "react-router-dom";
+import { setMenu } from "../../state/menu";
+import { setSearch } from "../../state/search";
+import { useDispatch } from "react-redux";
 
 
 export const Logo = () => {
+  const dispatch = useDispatch()
+
+
+  const handleLogo =()=>{
+   dispatch(setMenu('general'))
+   dispatch(setSearch(''))
+  }
   return (
     <>
   <Link style={{ textDecoration: "none" ,color:"#fff" }} to="/" >
       <Typography
+      onClick={handleLogo}
         variant="h6"
         noWrap
         component="a"
