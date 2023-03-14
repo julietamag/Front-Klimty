@@ -1,21 +1,16 @@
 import {
-  Avatar,
   Box,
   Button,
-  Checkbox,
   Container,
   CssBaseline,
-  FormControlLabel,
-  Grid,
-  Link,
   TextField,
   Typography,
 } from "@mui/material";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import React, { useState } from "react";
-import { signUp, signUpGoogle } from "../../utils/functions";
+import { signUp, signUpGoogle, signUpFacebook } from "../../utils/functions";
 import { auth } from "../../utils/firebaseConfig";
 import GoogleIcon from "@mui/icons-material/Google";
+import FacebookIcon from "@mui/icons-material/Facebook";
 
 export const SignupM = () => {
   const [email, setEmail] = useState("");
@@ -23,11 +18,14 @@ export const SignupM = () => {
   const [lastName, setLastName] = useState("");
   const [password, setPassword] = useState("");
   const handleSignUp = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     signUp(auth, email, password, name, lastName);
   };
   const handleSignUpGoogle = () => {
     signUpGoogle(auth);
+  };
+  const handleSignUpFacebook = () => {
+    signUpFacebook(auth);
   };
 
   return (
@@ -97,7 +95,7 @@ export const SignupM = () => {
             sx={{ mt: 3, mb: 2 }}
             onClick={handleSignUp}
           >
-         Create Account
+            Create Account
           </Button>
           <Button
             sx={{ mt: 3, mb: 2 }}
@@ -107,18 +105,14 @@ export const SignupM = () => {
           >
             <GoogleIcon /> SignUp with Google
           </Button>
-          <Grid container>
-            <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
-              </Link>
-            </Grid>
-            <Grid item>
-              <Link href="#" variant="body2">
-                {"Don't have an account? Sign Up"}
-              </Link>
-            </Grid>
-          </Grid>
+          <Button
+            sx={{ mt: 3, mb: 2 }}
+            fullWidth
+            onClick={handleSignUpFacebook}
+            variant="outlined"
+          >
+            <FacebookIcon /> SignUp with Facebook
+          </Button>
         </Box>
       </Box>
     </Container>

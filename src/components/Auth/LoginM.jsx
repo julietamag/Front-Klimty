@@ -1,31 +1,32 @@
 import {
-  Avatar,
   Box,
   Button,
-  Checkbox,
   Container,
   CssBaseline,
-  FormControlLabel,
   Grid,
-  Link,
   TextField,
   Typography,
 } from "@mui/material";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import React, { useState } from "react";
-import { logIn, signUpGoogle } from "../../utils/functions";
+import { logIn, signUpGoogle, forgotPassword } from "../../utils/functions";
 import { auth } from "../../utils/firebaseConfig";
 import GoogleIcon from "@mui/icons-material/Google";
+import { Link } from "react-router-dom";
 
 export const LoginM = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const handleLogIn = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     logIn(auth, email, password);
   };
   const handleSignUpGoogle = () => {
     signUpGoogle(auth);
+  };
+
+  const handleFPassword = (e) => {
+    e.preventDefault();
+    forgotPassword(auth, email);
   };
 
   return (
@@ -40,10 +41,9 @@ export const LoginM = () => {
         }}
       >
         <Typography component="h1" variant="h5">
-           Log in
+          Log in
         </Typography>
         <Box component="form" onSubmit={handleLogIn} noValidate sx={{ mt: 1 }}>
-         
           <TextField
             margin="normal"
             required
@@ -74,7 +74,7 @@ export const LoginM = () => {
             sx={{ mt: 3, mb: 2 }}
             onClick={handleLogIn}
           >
-         Log In
+            Log In
           </Button>
           <Button
             sx={{ mt: 3, mb: 2 }}
@@ -86,14 +86,16 @@ export const LoginM = () => {
           </Button>
           <Grid container>
             <Grid item xs>
-              <Link href="#" variant="body2">
+              <Link
+                onClick={(e) => handleFPassword(e)}
+                href="#"
+                variant="body2"
+              >
                 Forgot password?
               </Link>
             </Grid>
             <Grid item>
-              <Link href="#" variant="body2">
-                {"Don't have an account? Sign Up"}
-              </Link>
+              <Link to="/signup">{"Don't have an account? Sign Up"}</Link>
             </Grid>
           </Grid>
         </Box>
