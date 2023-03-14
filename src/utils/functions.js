@@ -48,7 +48,19 @@ export const logIn = (auth, email, password) => {
 };
 
 export const signUpGoogle = (auth) => {
-  signInWithPopup(auth, provider);
+  signInWithPopup(auth, provider).then(res=>{
+    console.log(res.user)
+    axios.get("http://localhost:3001/api/user").then((users) => {
+      onAuthStateChanged(auth, (userF) => {
+        const userFilter = users.data.filter((user) => {
+          return user.uid === userF.uid;
+        });
+        localStorage.setItem("id", userFilter[0].id);
+      });
+    })
+  })
+
+ 
 };
 
 export const logOut = (auth) => {
