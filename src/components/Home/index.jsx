@@ -11,6 +11,8 @@ export const Home = () => {
   // const photoCardDetail = useSelector((state) => state.detail);
 
 
+  
+
   return (
     <Grid container sx={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
       {/* {photoCardDetail.name && (
