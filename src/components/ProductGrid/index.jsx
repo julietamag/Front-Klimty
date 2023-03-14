@@ -1,51 +1,48 @@
 import { Label } from "@mui/icons-material";
 import { Masonry } from "@mui/lab";
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { setDetail } from "../../state/detail";
 import axios from "axios";
+import { setData } from "../../state/data";
 
 export const ProductGrid = () => {
   const dispatch = useDispatch();
-  const [itemData, setItemData] = useState([]);
+
+  const data = useSelector((state) => state.data);
+  const menu = useSelector((state) => state.menu);
 
   useEffect(() => {
     axios
       .get("http://localhost:3001/api/product")
-      .then(
-        (data) => setItemData(data.data)
-      )
-      .then(res => dispatch(setDetail(itemData[0])));
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+      .then((data) => dispatch(setData(data.data)));
   }, []);
 
   function handleProductClick(e, item) {
-
-    dispatch(setDetail(item))
+    dispatch(setDetail(item));
   }
-
 
   return (
     <>
-    <Masonry columns={4} spacing={5} >
-      {itemData?.map((item, index) => (
-        <div key={index}>
-          <img
-            onClick={(e)=> handleProductClick(e, item)}
-            src={`${item.photo_url}?w=162&auto=format`}
-            srcSet={`${item.photo_url}?w=162&auto=format&dpr=2 2x`}
-            alt={item.name}
-            loading="lazy"
-            style={{
-              borderBottomLeftRadius: 4,
-              borderBottomRightRadius: 4,
-              display: "block",
-              width: "100%",
-            }}
-          />
-        </div>
-      ))}
-    </Masonry>
-            </>
+      <Masonry columns={4} spacing={5}>
+        {data?.map((item, index) => (
+          <div key={index}>
+            <img
+              onClick={(e) => handleProductClick(e, item)}
+              src={`${item.photo_url}?w=162&auto=format`}
+              srcSet={`${item.photo_url}?w=162&auto=format&dpr=2 2x`}
+              alt={item.name}
+              loading="lazy"
+              style={{
+                borderBottomLeftRadius: 4,
+                borderBottomRightRadius: 4,
+                display: "block",
+                width: "100%",
+              }}
+            />
+          </div>
+        ))}
+      </Masonry>
+    </>
   );
 };
