@@ -3,11 +3,13 @@ import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import React from "react";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router";
 import { setSearch } from "../../state/search";
 import { setData } from "../../state/data";
 import axios from "axios";
 
 export const SearchInput = () => {
+  const navigate = useNavigate();
   const search = useSelector((state) => state.search);
   const dispatch = useDispatch();
 
@@ -20,6 +22,9 @@ export const SearchInput = () => {
       .get(`http://localhost:3001/api/search/product?input=${search}`)
       .then((res) => {
         dispatch(setData(res.data));
+      })
+      .then(() => {
+        navigate("/");
       });
   }, [search]);
 

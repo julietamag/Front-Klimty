@@ -29,6 +29,9 @@ const DashboardArtists = () => {
       .get(`http://localhost:3001/api/search/artworks/${data}`)
       .then((res) => {
         dispatch(setData(res.data));
+      })
+      .then(() => {
+        navigate("/");
       });
   };
 

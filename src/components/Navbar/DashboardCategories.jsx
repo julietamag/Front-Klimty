@@ -29,6 +29,9 @@ const DashboardCategories = () => {
       .get(`http://localhost:3001/api/search/products/${data}`)
       .then((res) => {
         dispatch(setData(res.data));
+      })
+      .then(() => {
+        navigate("/");
       });
   };
 
