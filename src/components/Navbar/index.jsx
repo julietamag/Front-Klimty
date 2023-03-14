@@ -4,7 +4,6 @@ import Toolbar from "@mui/material/Toolbar";
 import Container from "@mui/material/Container";
 import { Logo } from "./Logo";
 import { BoardUser } from "./BoardUser";
-import { Menus } from "./Menus";
 import { SearchInput } from "./SearchInput";
 import { Cart } from "./Cart";
 import DashboardArtists from "./DashboardArtists";

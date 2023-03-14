@@ -1,27 +1,41 @@
 import { Masonry } from "@mui/lab";
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { setDetail } from "../../state/detail";
 import axios from "axios";
 
 import { setData } from "../../state/data";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 export const ProductGrid = () => {
+  const location = useLocation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const data = useSelector((state) => state.data);
   const menu = useSelector((state) => state.menu);
+  const type = useSelector((state) => state.type);
 
   useEffect(() => {
-    axios
-      .get("http://localhost:3001/api/product")
-      .then((data) => dispatch(setData(data.data)));
+    if (menu === "general") {
+      axios
+        .get("http://localhost:3001/api/product")
+        .then((data) => dispatch(setData(data.data)));
+    } else if (menu === "artist") {
+      // axios
+      //   .get(`http://localhost:3001/api/search/artworks/${type}`)
+      //   .then((res) => {
+      //     dispatch(setData(res.data));
+      //   });
+    } else {
+      // axios
+      //   .get(`http://localhost:3001/api/search/products/${type}`)
+      //   .then((res) => {
+      //     dispatch(setData(res.data));
+      //   });
+    }
   }, []);
 
   function handleProductClick(e, item) {
-    dispatch(setDetail(item));
-    navigate(`/product/${item.id}`)
+    navigate(`/product/${item.id}`);
   }
 
   return (
@@ -42,7 +56,6 @@ export const ProductGrid = () => {
                 width: "100%",
               }}
             />
-
           </div>
         ))}
       </Masonry>
