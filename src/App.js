@@ -6,7 +6,7 @@ import { SignupM } from "./components/Auth/SignupM";
 import Profile from "./components/Profile";
 import Footer from "./components/Footer";
 import {Home} from "./components/Home";
-import toast, { Toaster } from 'react-hot-toast';
+import  { Toaster } from 'react-hot-toast';
 import Checkout from "./components/Checkout/Checkout";
 import ErrorPage from "./components/ErrorPage";
 import DetailsCard from "./commons/DetailsCard";

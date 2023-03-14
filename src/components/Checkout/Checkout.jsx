@@ -1,23 +1,25 @@
-import * as React from 'react';
-import CssBaseline from '@mui/material/CssBaseline';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Container from '@mui/material/Container';
-import Toolbar from '@mui/material/Toolbar';
-import Paper from '@mui/material/Paper';
-import Stepper from '@mui/material/Stepper';
-import Step from '@mui/material/Step';
-import StepLabel from '@mui/material/StepLabel';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import AddressForm from './AddressForm';
-import PaymentForm from './PaymentForm';
-import Review from './Review';
+import * as React from "react";
+import CssBaseline from "@mui/material/CssBaseline";
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
+import Toolbar from "@mui/material/Toolbar";
+import Paper from "@mui/material/Paper";
+import Stepper from "@mui/material/Stepper";
+import Step from "@mui/material/Step";
+import StepLabel from "@mui/material/StepLabel";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import AddressForm from "./AddressForm";
+import PaymentForm from "./PaymentForm";
+import Review from "./Review";
+import { useDispatch, useSelector } from "react-redux";
+import toast from "react-hot-toast";
+import axios from "axios";
+import { resetCheckout} from "../../state/checkout";
 
-
-
-const steps = ['Shipping address', 'Payment details', 'Review your order'];
+const steps = ["Shipping address", "Payment details", "Review your order"];
 
 function getStepContent(step) {
   switch (step) {
@@ -28,7 +30,7 @@ function getStepContent(step) {
     case 2:
       return <Review />;
     default:
-      throw new Error('Unknown step');
+      throw new Error("Unknown step");
   }
 }
 
@@ -36,9 +38,39 @@ const theme = createTheme();
 
 export default function Checkout() {
   const [activeStep, setActiveStep] = React.useState(0);
+  const checkout = useSelector((state) => state.checkout);
+  const dispatch = useDispatch()
+  const userId = localStorage.getItem('id')
 
   const handleNext = () => {
-    setActiveStep(activeStep + 1);
+    if (
+      checkout.name &&
+      checkout.lastName &&
+      checkout.address1 &&
+      checkout.city &&
+      checkout.zip &&
+      checkout.country
+    ) {
+      setActiveStep(activeStep + 1);
+    } else {
+      toast.error(`Input cannot be null`);
+    }
+    if(activeStep === 2) {
+      console.log(checkout);
+      axios.post(`http://localhost:3001/api/checkout/${userId}`, {checkout})
+      .then(checkoutFinal => {
+      dispatch(resetCheckout({name: "",
+      lastName: "",
+      address1: "",
+      address2: "",
+      city: "",
+      zip: "",
+      country: "",
+      region: "",}))
+        
+      })
+      .catch(err => console.error(err))
+    }
   };
 
   const handleBack = () => {
@@ -53,14 +85,15 @@ export default function Checkout() {
         color="default"
         elevation={0}
         sx={{
-          position: 'relative',
+          position: "relative",
           borderBottom: (t) => `1px solid ${t.palette.divider}`,
         }}
-      >
-       
-      </AppBar>
+      ></AppBar>
       <Container component="main" maxWidth="sm" sx={{ mb: 4 }}>
-        <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
+        <Paper
+          variant="outlined"
+          sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}
+        >
           <Typography component="h1" variant="h4" align="center">
             Checkout
           </Typography>
@@ -85,7 +118,7 @@ export default function Checkout() {
           ) : (
             <React.Fragment>
               {getStepContent(activeStep)}
-              <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+              <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
                 {activeStep !== 0 && (
                   <Button onClick={handleBack} sx={{ mt: 3, ml: 1 }}>
                     Back
@@ -97,13 +130,12 @@ export default function Checkout() {
                   onClick={handleNext}
                   sx={{ mt: 3, ml: 1 }}
                 >
-                  {activeStep === steps.length - 1 ? 'Place order' : 'Next'}
+                  {activeStep === steps.length - 1 ? "Place order" : "Next"}
                 </Button>
               </Box>
             </React.Fragment>
           )}
         </Paper>
-     
       </Container>
     </ThemeProvider>
   );
