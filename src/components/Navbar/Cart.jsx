@@ -29,7 +29,6 @@ export const Cart = () => {
   const userId = localStorage.getItem("id");
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [totalAmount, setTotalAmount] = useState(0);
   const [state, setState] = useState({
     top: false,
     left: false,

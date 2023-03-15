@@ -53,8 +53,8 @@ const DetailsCard = () => {
 
   return (
     <>
-      {/* {console.log("DETAIL", detail)}
-      {console.log("LOCATION", location.pathname.split("/")[2])} */}
+  
+      
       <Button variant="text" onClick={handleOnClick} sx={{ px: 10 }}>
         <ArrowBackIosNewOutlinedIcon color="black" /> GO BACK
       </Button>

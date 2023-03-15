@@ -6,6 +6,7 @@ import {
   MenuItem,
   MenuList,
   Tooltip,
+  Typography,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { onAuthStateChanged } from "firebase/auth";
@@ -19,7 +20,6 @@ import { useDispatch, useSelector } from "react-redux";
 export const BoardUser = () => {
   const photo = useSelector((state) => state.photo);
   const [name, setName] = useState("");
-  const uid = useSelector((state) => state.uid);
   const dispath = useDispatch();
   const [anchorElUser, setAnchorElUser] = useState(null);
   const userId = localStorage.getItem("id");
@@ -49,10 +49,14 @@ export const BoardUser = () => {
 
   return (
     <Box sx={{ flexGrow: 0 }}>
-      
       <Tooltip title="Open settings">
-        <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-          <Avatar alt={`${name}`} src={`${photo}`} />{name.split(' ')[0]}
+        <IconButton
+          onClick={handleOpenUserMenu}
+          color="secondary"
+          sx={{ p: 0 }}
+        >
+          <Avatar alt={`${name}`} src={`${photo}`} />
+          <Typography sx={{ ml: 2 }}>{`${name.split(" ")[0]}`}</Typography>
         </IconButton>
       </Tooltip>
       <Menu

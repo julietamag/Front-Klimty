@@ -6,6 +6,7 @@ export const dropCart = createAction("DROP_CART");
 export const addQuantity = createAction("ADD_QUANTITY");
 export const minusQuantity = createAction("MINUS_QUANTITY");
 
+
 const reducer = createReducer([], {
   [setAxiosCart]: (state, action) => action.payload,
   [setCart]: (state, action) => {
@@ -15,8 +16,10 @@ const reducer = createReducer([], {
     if (result === undefined) return [...state, action.payload];
     else return state;
   },
-  [dropCart]: (state, action) =>
-    state.filter((el) => el.product.title !== action.payload.product.title),
+  [dropCart]: (state, action) => {
+    const pay = action.payload;
+    return state.filter((el) => el.product.name !== pay.product.name);
+  },
   [addQuantity]: (state, action) => {
     const newState = state.filter(
       (item) => item.product.id !== action.payload.product.id

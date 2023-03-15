@@ -29,7 +29,7 @@ const ProductReview = () => {
           dispatch(setReviewRound(averageStar / data.data.length));
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.error(err));
   }, [id, dispatch]);
 
   return (
