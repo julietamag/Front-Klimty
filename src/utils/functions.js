@@ -133,7 +133,7 @@ export const forgotPassword = (auth, email) => {
       const userFilter = users.data.filter((user) => {
         return user?.email === email;
       });
-      console.log(userFilter);
+      console.log(userFilter); 
       !userFilter[0]
         ? toast.error("please enter a valid email")
         : sendPasswordResetEmail(auth, email);
