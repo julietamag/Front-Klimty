@@ -16,8 +16,7 @@ import { setUid } from "../../state/uid";
 import { setPhoto } from "../../state/photo";
 import { useDispatch, useSelector } from "react-redux";
 
-//MUI Styles
-// import { boardUserStyles } from "../../styles/boardUserStyles";
+
 
 export const BoardUser = () => {
   const photo = useSelector((state) => state.photo);
@@ -41,7 +40,13 @@ export const BoardUser = () => {
       )
     );
   };
-  // const classes = boardUserStyles();
+
+  useEffect(()=>{
+    onAuthStateChanged(auth , user=>{
+      console.log(user)
+    })
+  },[])
+
   return (
     <Box sx={{ flexGrow: 0 }}>
       <Tooltip title="Open settings">

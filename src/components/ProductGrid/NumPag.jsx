@@ -10,16 +10,19 @@ export const NumPag = () => {
   const [countPag, setCountPag] = useState(1);
   const dispatch = useDispatch();
 
-  const handleChangePage = (event,value) => {
+  const handleChangePage = (event, value) => {
     dispatch(setPage(value));
   };
 
   useEffect(() => {
     setCountPag(Math.ceil(data?.length / 10));
   }, [data]);
-  return <Pagination count={countPag} 
-  onChange={handleChangePage} 
-
-  showFirstButton
-   showLastButton ></Pagination>;
+  return (
+    <Pagination
+      count={countPag}
+      onChange={handleChangePage}
+      showFirstButton
+      showLastButton
+    ></Pagination>
+  );
 };
