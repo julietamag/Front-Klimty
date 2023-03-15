@@ -1,7 +1,9 @@
 import React from "react";
+import ShoppingHistory from "./UserShoppingHistory"
 
 const Profile = () => {
   return (
+    <>
     <div className="userProfileView">
       <div className="userProfileImage">
         <img
@@ -30,6 +32,8 @@ const Profile = () => {
         </button>
       </div>
     </div>
+    <ShoppingHistory/>
+    </>
   );
 };
 
