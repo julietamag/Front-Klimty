@@ -10,7 +10,11 @@ import  { Toaster } from 'react-hot-toast';
 import Checkout from "./components/Checkout/Checkout";
 import ErrorPage from "./components/ErrorPage";
 import DetailsCard from "./commons/DetailsCard";
+
+import ReviewForm from "./components/UserShoppingHistory/ReviewForm";
+
 import AdminView from "./components/Admin/AdminView";
+
 
 
 function App() {

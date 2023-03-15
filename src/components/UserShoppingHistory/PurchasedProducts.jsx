@@ -12,6 +12,7 @@ import Typography from "@mui/material/Typography";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import TableFooter from "@mui/material/TableFooter";
+import ReviewModal from "./ReviewModal"
 
 const PurchasedProducts = (props) => {
   const { row } = props;
@@ -50,6 +51,7 @@ const PurchasedProducts = (props) => {
                     <TableCell>Price (u)</TableCell>
                     <TableCell align="right">Amount</TableCell>
                     <TableCell align="right">Total price ($)</TableCell>
+                    <TableCell align="right">Review</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -66,6 +68,7 @@ const PurchasedProducts = (props) => {
                           historyRow.quantity * historyRow.product.price * 100
                         ) / 100}
                       </TableCell>
+                      <TableCell align="right"><ReviewModal product={historyRow.product}/></TableCell>
                     </TableRow>
                   ))}
                   <TableFooter variant="footer">
