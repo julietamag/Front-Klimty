@@ -1,10 +1,11 @@
 import { Masonry } from "@mui/lab";
+import { Box } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
-
 import { setData } from "../../state/data";
 import { useNavigate, useLocation } from "react-router-dom";
+import { NumPag } from "./NumPag";
 
 export const ProductGrid = () => {
   const location = useLocation();
@@ -12,6 +13,7 @@ export const ProductGrid = () => {
   const navigate = useNavigate();
   const data = useSelector((state) => state.data);
   const menu = useSelector((state) => state.menu);
+  const page = useSelector((state) => state.page);
   const type = useSelector((state) => state.type);
 
   useEffect(() => {
@@ -39,9 +41,9 @@ export const ProductGrid = () => {
   }
 
   return (
-    <>
-      <Masonry  columns={{ xs: 1, sm: 2, md:3 ,lg:4 }} spacing={5}>
-        {data?.map((item, index) => (
+    <Box sx={{ margin: 2, width: "100%" }}>
+      <Masonry columns={{ xs: 1, sm: 2, md: 3, lg: 4 }} spacing={5}>
+        {data?.slice((page - 1) * 10, page * 10).map((item, index) => (
           <div key={index}>
             <img
               onClick={(e) => handleProductClick(e, item)}
@@ -59,6 +61,8 @@ export const ProductGrid = () => {
           </div>
         ))}
       </Masonry>
-    </>
+
+      <NumPag />
+    </Box>
   );
 };

@@ -16,11 +16,9 @@ import { setUid } from "../../state/uid";
 import { setPhoto } from "../../state/photo";
 import { useDispatch, useSelector } from "react-redux";
 
-//MUI Styles
-// import { boardUserStyles } from "../../styles/boardUserStyles";
-
 export const BoardUser = () => {
   const photo = useSelector((state) => state.photo);
+  const [name, setName] = useState("");
   const uid = useSelector((state) => state.uid);
   const dispath = useDispatch();
   const [anchorElUser, setAnchorElUser] = useState(null);
@@ -41,12 +39,20 @@ export const BoardUser = () => {
       )
     );
   };
-  // const classes = boardUserStyles();
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      setName(user.displayName);
+      dispath(setPhoto(user.photoURL));
+    });
+  }, []);
+
   return (
     <Box sx={{ flexGrow: 0 }}>
+      
       <Tooltip title="Open settings">
         <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-          <Avatar alt="Remy Sharp" src={`${photo}`} />
+          <Avatar alt={`${name}`} src={`${photo}`} />{name.split(' ')[0]}
         </IconButton>
       </Tooltip>
       <Menu
