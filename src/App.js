@@ -10,6 +10,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import Checkout from "./components/Checkout/Checkout";
 import ErrorPage from "./components/ErrorPage";
 import DetailsCard from "./commons/DetailsCard";
+import AdminView from "./components/Admin/AdminView";
 
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
         <Route path="/product/:id" element={<DetailsCard/>}/>
         <Route path="/signup" element={<SignupM />} />
         <Route path="/checkout" element={<Checkout />} />
+        <Route path="/admin" element={<AdminView/>}/>
         <Route path="*" element={<ErrorPage/>}/>
       </Routes>
       <Footer />
