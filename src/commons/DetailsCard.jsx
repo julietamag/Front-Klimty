@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router";
+import axios from "axios";
+import ProductReview from "./ProductReview";
+
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
@@ -10,11 +13,11 @@ import AddShoppingCartOutlinedIcon from "@mui/icons-material/AddShoppingCartOutl
 import ArrowBackIosNewOutlinedIcon from "@mui/icons-material/ArrowBackIosNewOutlined";
 import { useDispatch, useSelector } from "react-redux";
 import { setCart } from "../state/cart";
-// import { setDetail } from "../state/detail";
-import axios from "axios";
+
+
+
 
 const DetailsCard = () => {
-  // const detail = useSelector((state) => state.detail);
   const [detail, setDetail] = useState({});
   const cart = useSelector((state) => state.cart);
   const location = useLocation();
@@ -36,7 +39,6 @@ const DetailsCard = () => {
         `http://localhost:3001/api/product/${location.pathname.split("/")[2]}`
       )
       .then((detail) => {
-        console.log("el detalle final", detail);
         setDetail(detail.data);
       })
       .catch((err) => console.error(err));
@@ -51,10 +53,12 @@ const DetailsCard = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cart]);
 
+
+
   return (
     <>
-      {console.log("DETAIL", detail)}
-      {console.log("LOCATION", location.pathname.split("/")[2])}
+      {/* {console.log("DETAIL", detail)}
+      {console.log("LOCATION", location.pathname.split("/")[2])} */}
       <div style={{ display: "flex" }}>
         <CardMedia
           component="img"
@@ -63,7 +67,6 @@ const DetailsCard = () => {
           alt="print"
           sx={{ boxShadow: 10, width: 600, margin: 10 }}
         />
-
         <CardContent>
           <Divider
             orientation="vertical"
@@ -92,11 +95,7 @@ const DetailsCard = () => {
         </CardContent>
       </div>
       <div>
-        <CardContent sx={{ m: 10 }}>
-          <Typography paragraph>REVIEW</Typography>
-          <Typography paragraph>REVIEW ID</Typography>
-          <Typography paragraph>REVIEW TEXT.</Typography>
-        </CardContent>
+        <ProductReview detail={detail}/>
       </div>
       <Button variant="text" onClick={handleOnClick} sx={{ px: 90 }}>
         <ArrowBackIosNewOutlinedIcon color="black" /> GO BACK
