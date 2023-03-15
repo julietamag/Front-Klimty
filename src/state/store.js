@@ -10,6 +10,7 @@ import dataReducer from "./data";
 import typeReducer from "./type";
 import searchReducer from "./search";
 import checkoutReducer from './checkout'
+import reviewReducer from './review'
 
 const store = configureStore({
   reducer: {
@@ -22,7 +23,8 @@ const store = configureStore({
     data: dataReducer,
     type: typeReducer,
     search: searchReducer,
-    checkout: checkoutReducer
+    checkout: checkoutReducer,
+    review: reviewReducer
   },
 });
 

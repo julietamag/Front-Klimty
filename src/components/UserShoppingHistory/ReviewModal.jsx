@@ -23,7 +23,7 @@ const ReviewModal = ({product}) => {
   
     return (
       <div>
-        <Button onClick={handleOpen}>Add Review</Button>
+        <Button onClick={handleOpen}>{'Add Review'}</Button>
         <Modal
           open={open}
           onClose={handleClose}

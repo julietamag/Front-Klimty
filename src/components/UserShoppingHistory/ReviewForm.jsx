@@ -9,12 +9,12 @@ import Button from "@mui/material/Button";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 
+
 const ReviewForm = ({ product }) => {
   const userId = localStorage.getItem("id");
   const productId = product.id;
   const [description, setDescription] = useState("");
   const [star, setStar] = useState(0);
-
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -27,7 +27,9 @@ const ReviewForm = ({ product }) => {
         description,
         star,
       })
-      .then(() => toast.success("Review added successfully"))
+      .then(() => {
+        toast.success("Review added successfully");
+      })
       .catch(() => toast.error("You review could not be added"));
   };
 
