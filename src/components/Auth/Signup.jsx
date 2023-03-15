@@ -5,6 +5,7 @@ import { PasswordInput } from "./PasswordInput";
 import GoogleIcon from "@mui/icons-material/Google";
 import { signUp, signUpGoogle } from "../../utils/functions";
 import { auth } from "../../utils/firebaseConfig";
+import axios from "axios";
 
 export const Signup = () => {
   const [email, setEmail] = useState("");
@@ -16,6 +17,8 @@ export const Signup = () => {
 
   const handleSignUpGoogle = () => {
     signUpGoogle(auth);
+    axios.post("http://localhost:3000/api/user")
+    .then(res=>console.log(res.data))
   };
 
   return (
