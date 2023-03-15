@@ -8,9 +8,10 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useState } from "react";
-import { logIn, signUpGoogle, forgotPassword } from "../../utils/functions";
+import { logIn, signUpGoogle, forgotPassword, signUpFacebook } from "../../utils/functions";
 import { auth } from "../../utils/firebaseConfig";
 import GoogleIcon from "@mui/icons-material/Google";
+import FacebookIcon from "@mui/icons-material/Facebook";
 import { Link } from "react-router-dom";
 
 export const LoginM = () => {
@@ -23,6 +24,10 @@ export const LoginM = () => {
   const handleSignUpGoogle = () => {
     signUpGoogle(auth);
   };
+  const handleSignUpFacebook = () => {
+    signUpFacebook(auth);
+  };
+
 
   const handleFPassword = (e) => {
     e.preventDefault();
@@ -82,7 +87,15 @@ export const LoginM = () => {
             onClick={handleSignUpGoogle}
             variant="outlined"
           >
-            <GoogleIcon /> logIn with Google
+            <GoogleIcon /> {`   LogIn with Google`}
+          </Button>
+          <Button
+            sx={{ mt: 3, mb: 2 }}
+            fullWidth
+            onClick={handleSignUpFacebook}
+            variant="outlined"
+          >
+            <FacebookIcon /> LogIn with Facebook
           </Button>
           <Grid container>
             <Grid item xs>
