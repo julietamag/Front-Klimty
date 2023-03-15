@@ -29,7 +29,7 @@ const store = configureStore({
     search: searchReducer,
     checkout: checkoutReducer,
 
-    review: reviewReducer
+    review: reviewReducer,
 
     page: pageReducer
 
