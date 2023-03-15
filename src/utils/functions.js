@@ -5,26 +5,26 @@ import {
   signInWithPopup,
   signOut,
   onAuthStateChanged,
+  sendPasswordResetEmail,
 } from "firebase/auth";
-import { provider } from "./firebaseConfig";
+import { providerGoogle, providerFacebook } from "./firebaseConfig";
 import axios from "axios";
 import toast from "react-hot-toast";
 
 export const signUp = (auth, email, password, name, lastName) => {
-  createUserWithEmailAndPassword(auth, email, password)
-  .then(() => {
-      sendEmailVerification(auth.currentUser).then(() => {
-        const { uid } = auth.currentUser;
-        axios.post("http://localhost:3001/api/user", {
-          name,
-          lastName,
-          email,
-          uid,
-        });
-        toast.success(`We send you an email to ${email}`);
-        signOut(auth);
+  createUserWithEmailAndPassword(auth, email, password).then(() => {
+    sendEmailVerification(auth.currentUser).then(() => {
+      const { uid } = auth.currentUser;
+      axios.post("http://localhost:3001/api/user", {
+        name,
+        lastName,
+        email,
+        uid,
       });
-  })
+      toast.success(`We send you an email to ${email}`);
+      signOut(auth);
+    });
+  });
 };
 
 export const logIn = (auth, email, password) => {
@@ -48,19 +48,97 @@ export const logIn = (auth, email, password) => {
 };
 
 export const signUpGoogle = (auth) => {
-  signInWithPopup(auth, provider).then(res=>{
-    console.log(res.user)
-    axios.get("http://localhost:3001/api/user").then((users) => {
-      onAuthStateChanged(auth, (userF) => {
-        const userFilter = users.data.filter((user) => {
-          return user.uid === userF.uid;
-        });
-        localStorage.setItem("id", userFilter[0].id);
-      });
-    })
-  })
+  signInWithPopup(auth, providerGoogle).then((res) => {
+    //busco todos los usuarios
 
- 
+    axios
+      .get("http://localhost:3001/api/user")
+      .then((users) => {
+        onAuthStateChanged(auth, (userF) => {
+          const userFilter = users.data.filter((user) => {
+            return user.uid === userF.uid;
+          });
+          //si no existe mi usuario lo crea
+          if (!userFilter[0]) {
+            const name = res.user.displayName.split(" ")[0];
+            const lastName = res.user.displayName.split(" ")[1];
+            const { email, uid } = res.user;
+
+            axios.post("http://localhost:3001/api/user", {
+              name,
+              lastName,
+              email,
+              uid,
+            });
+          }
+        });
+      })
+      .then(() => {
+        axios.get("http://localhost:3001/api/user").then((users) => {
+          onAuthStateChanged(auth, (userF) => {
+            const userFilter = users.data.filter((user) => {
+              return user.uid === userF.uid;
+            });
+            localStorage.setItem("id", userFilter[0].id);
+          });
+        });
+        toast.success("Successfully Logged In !");
+      });
+  });
+};
+
+export const signUpFacebook = (auth) => {
+  signInWithPopup(auth, providerFacebook).then((res) => {
+    //busco todos los usuarios
+
+    axios
+      .get("http://localhost:3001/api/user")
+      .then((users) => {
+        onAuthStateChanged(auth, (userF) => {
+          const userFilter = users.data.filter((user) => {
+            return user.uid === userF.uid;
+          });
+          //si no existe mi usuario lo crea
+          if (!userFilter[0]) {
+            const name = res.user.displayName.split(" ")[0];
+            const lastName = res.user.displayName.split(" ")[1];
+            const { email, uid } = res.user;
+
+            axios.post("http://localhost:3001/api/user", {
+              name,
+              lastName,
+              email,
+              uid,
+            });
+          }
+        });
+      })
+      .then(() => {
+        axios.get("http://localhost:3001/api/user").then((users) => {
+          onAuthStateChanged(auth, (userF) => {
+            const userFilter = users.data.filter((user) => {
+              return user.uid === userF.uid;
+            });
+            localStorage.setItem("id", userFilter[0].id);
+          });
+        });
+        toast.success("Successfully Logged In !");
+      });
+  });
+};
+
+export const forgotPassword = (auth, email) => {
+  axios.get("http://localhost:3001/api/user").then((users) => {
+
+      const userFilter = users.data.filter((user) => {
+        return user?.email === email;
+      });
+      console.log(userFilter); 
+      !userFilter[0]
+        ? toast.error("please enter a valid email")
+        : sendPasswordResetEmail(auth, email);
+    ;
+  });
 };
 
 export const logOut = (auth) => {
