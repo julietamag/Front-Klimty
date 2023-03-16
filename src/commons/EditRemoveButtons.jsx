@@ -1,22 +1,41 @@
-import React, { useCallback } from "react";
+import React from "react";
 import Box from "@mui/material/Box";
 import Fab from "@mui/material/Fab";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { setBooleano } from "../state/adminProduct";
 
 export default function EditRemoveButtons({ item, openModal }) {
-    // funcion para destruir el item en el back
-    const handleClick = useCallback((item) => {
-      localStorage.setItem("productId", item.id);
-      const userId = localStorage.getItem("id");
-      axios
+  const dispatch = useDispatch();
+
+  // funcion para destruir el item en el back
+  function handleClick() {
+    const userId = localStorage.getItem("id");
+    if (item.price) {
+      return axios
         .delete(`http://localhost:3001/api/product/${userId}/${item.id}`)
         .then((res) => {
           console.log(res);
+          dispatch(setBooleano());
         });
-    }, []);
-
+    } else if (item.uid) {
+      return axios
+        .delete(`http://localhost:3001/api/user/${userId}/delete/${item.id}`)
+        .then((res) => {
+          console.log(res);
+          dispatch(setBooleano());
+        });
+    } else if (item.title) {
+      return axios
+        .delete(`http://localhost:3001/api/artist/${userId}/delete/${item.id}`)
+        .then((res) => {
+          console.log(res);
+          dispatch(setBooleano());
+        });
+    }
+  }
 
   return (
     <Box sx={{ "& > :not(style)": { m: 1 }, margin: "auto auto auto 0" }}>
@@ -24,7 +43,7 @@ export default function EditRemoveButtons({ item, openModal }) {
         <EditIcon onClick={() => openModal()} />
       </Fab>
       <Fab color="error">
-        <DeleteIcon onClick={() => handleClick(item)} />
+        <DeleteIcon onClick={handleClick} />
       </Fab>
     </Box>
   );

@@ -10,7 +10,6 @@ import axios from "axios";
 import { useParams } from "react-router";
 import { useDispatch } from "react-redux";
 import { setReviewRound } from "../state/review";
-import { Box } from "@mui/material";
 
 const ProductReview = () => {
   const [reviews, setReviews] = useState([]);

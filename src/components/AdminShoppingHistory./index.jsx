@@ -5,26 +5,27 @@ import TableBody from "@mui/material/TableBody";
 import TableContainer from "@mui/material/TableContainer";
 import Paper from "@mui/material/Paper";
 import { Box } from "@mui/material";
-import PurchasedProducts from "../UserShoppingHistory/PurchasedProducts";
+import { useParams } from "react-router";
+import PurchasedProductsAdmin from "./PurchasedProducts";
 
-const ShoppingHistory = () => {
-  const userId = localStorage.getItem("id");
+const AdminShoppingHistory = () => {
   const [purchase, setPurchase] = useState([]);
+  const {id} = useParams()
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3001/api/checkout/${userId}/history`)
+      .get(`http://localhost:3001/api/checkout/${id}/history`)
       .then((res) => setPurchase(res.data));
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
-    <Box sx={{ margin: 15 }} >
+    <Box sx={{ margin: 15 }}>
       <TableContainer component={Paper} sx={{ boxShadow: 3 }}>
         <Table aria-label="collapsible table">
           <TableBody>
             {purchase.map((row, i) => (
-              <PurchasedProducts key={i} row={row} />
+              <PurchasedProductsAdmin key={i} row={row} />
             ))}
           </TableBody>
         </Table>
@@ -33,4 +34,4 @@ const ShoppingHistory = () => {
   );
 };
 
-export default ShoppingHistory;
+export default AdminShoppingHistory;

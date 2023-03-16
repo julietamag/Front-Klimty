@@ -14,6 +14,7 @@ import AdminViewUser from "./components/Admin/AdminViewUser";
 import { HomeAdmin } from "./components/Admin/HomeAdmin";
 import AdminViewProduct from "./components/Admin/AdminViewProduct";
 import AdminViewArtist from "./components/Admin/AdminViewArtist";
+import AdminShoppingHistory from "./components/AdminShoppingHistory.";
 
 function App() {
   return (
@@ -32,7 +33,9 @@ function App() {
         <Route path="/admin" element={<HomeAdmin />} />
         <Route path="/admin/product" element={<AdminViewProduct />} />
         <Route path="/admin/user" element={<AdminViewUser />} />
+        <Route path="/admin/user/history/:id" element={<AdminShoppingHistory />} />
         <Route path="/admin/artist" element={<AdminViewArtist />} />
+
 
         <Route path="*" element={<ErrorPage />} />
       </Routes>

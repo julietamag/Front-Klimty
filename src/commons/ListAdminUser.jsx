@@ -5,14 +5,19 @@ import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import EditRemoveButtons from "./EditRemoveButtons";
 import Modal from "@mui/material/Modal";
-import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { setBooleano } from "../state/adminProduct";
-import { ButtonBase } from "@mui/material";
+import {
+  ButtonBase,
+  FormGroup,
+  MenuItem,
+  Select,
+} from "@mui/material";
 import { styled } from "@mui/material/styles";
+import { useNavigate } from "react-router";
 
 const Img = styled("img")({
   margin: "auto",
@@ -26,8 +31,7 @@ export default function ListAdminArtist({ item }) {
   const [open, setOpen] = useState(false);
   // estados del edit en el modal
   const [isAdmin, setIsAdmin] = useState(item.isAdmin);
-  const [state, setState] = useState(item.state);
-
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const openModal = () => {
     setOpen(!open);
@@ -39,7 +43,7 @@ export default function ListAdminArtist({ item }) {
 
     if (userId) {
       axios
-        .put(`http://localhost:3001/api/user/edit/${userId}`, {
+        .put(`http://localhost:3001/api/user/${userId}/edit/${item.id}`, {
           isAdmin,
         })
         .catch((error) => {
@@ -49,6 +53,10 @@ export default function ListAdminArtist({ item }) {
     dispatch(setBooleano());
     setOpen();
   };
+
+  function handleClickUser() {
+    navigate(`/admin/user/history/${item.id}`)
+  }
 
   return (
     <>
@@ -67,7 +75,7 @@ export default function ListAdminArtist({ item }) {
               backgroundColor: "#FFF",
               borderRadius: "8px",
               padding: "45px",
-              width: '70%'
+              width: "70%",
             }}
           >
             <Typography
@@ -76,15 +84,22 @@ export default function ListAdminArtist({ item }) {
             >
               Edit Item
             </Typography>
-            <div style={{width: '100%'}}>
+
+            <div style={{ width: "100%" }}>
               <form onSubmit={(e) => handleSubmit(e, item)}>
-                <TextField
-                  label="Name"
-                  variant="outlined"
-                  value={isAdmin}
-                  onChange={(e) => setIsAdmin(e.target.value)}
-                  sx={{ marginBottom: "10px", width: "100%", display: "flex", justifyContent: 'center' }}
-                />
+                <FormGroup>
+                  <Typography>{`IS ADMIN: ${isAdmin}`}</Typography>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={isAdmin}
+                    label="isAdmin"
+                    onChange={(e) => setIsAdmin(e.target.value)}
+                  >
+                    <MenuItem value={false}>FALSE</MenuItem>
+                    <MenuItem value={true}>TRUE</MenuItem>
+                  </Select>
+                </FormGroup>
 
                 <Box
                   sx={{ display: "flex", justifyContent: "center", mt: "auto" }}
@@ -139,10 +154,15 @@ export default function ListAdminArtist({ item }) {
             theme.palette.mode === "dark" ? "#1A2027" : "#fff",
         }}
       >
-        <Grid container spacing={2}>
-        <Grid item>
+        <Grid container spacing={2} onClick={handleClickUser}>
+          <Grid item>
             <ButtonBase sx={{ width: 270, height: 200 }}>
-              <Img alt="userPhoto" src={"https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"} />
+              <Img
+                alt="userPhoto"
+                src={
+                  "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
+                }
+              />
             </ButtonBase>
           </Grid>
           <Grid item xs={12} sm container>
