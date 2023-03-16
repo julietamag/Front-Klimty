@@ -30,6 +30,7 @@ export const BoardUser = () => {
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
+
   const handleLogOut = () => {
     logOut(auth);
     dispath(setUid(""));
@@ -39,6 +40,7 @@ export const BoardUser = () => {
       )
     );
   };
+
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -85,6 +87,9 @@ export const BoardUser = () => {
             </Link>
             <Link style={{ textDecoration: "none", color: "#000" }} to="/">
               <MenuItem onClick={handleLogOut}>Logout</MenuItem>
+            </Link>
+            <Link style={{ textDecoration: "none", color: "#000" }} to="admin">
+              <MenuItem>admin</MenuItem>
             </Link>
           </MenuList>
         ) : (
