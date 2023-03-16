@@ -8,7 +8,6 @@ import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { setMenu } from "../../state/menu";
 import { setData } from "../../state/data";
-import { setType } from "../../state/type";
 
 const DashboardCategories = () => {
   // busqueda de categorias

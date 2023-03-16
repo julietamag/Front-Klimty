@@ -12,6 +12,10 @@ import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import axios from "axios";
 
+//import react tags
+import ReactTags from "react-tagsinput";
+import "react-tagsinput/react-tagsinput.css";
+
 const Img = styled("img")({
   margin: "auto",
   display: "block",
@@ -19,7 +23,7 @@ const Img = styled("img")({
   maxHeight: "100%",
 });
 
-export default function ListAdmin({ item, handleClick }) {
+export default function ListAdmin({ item, handleClick, editProducts }) {
   // estado para confimar si abro el edit
   const [open, setOpen] = useState(false);
   // estados del edit en el modal
@@ -32,23 +36,12 @@ export default function ListAdmin({ item, handleClick }) {
     setOpen(!open);
   };
 
-  const editProducts = (updatedItem, productId) => {
-    const userId = localStorage.getItem("id");
-    axios
-      .put(`http://localhost:3001/api/product/${userId}/edit/${productId}`, {
-        updatedItem,
-      })
-      .then((res) => {
-        console.log(res);
-      });
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
     const productId = item.id;
     const updatedItem = { ...item, name, price, description, category };
     editProducts(updatedItem, productId);
-    openModal();
+    setOpen();
   };
 
   return (
@@ -58,7 +51,7 @@ export default function ListAdmin({ item, handleClick }) {
           <Box
             sx={{
               position: "absolute",
-              top: "-10%",
+              top: "20%",
               left: "50%",
               transform: "translateX(-50%)",
               display: "flex",
@@ -66,56 +59,83 @@ export default function ListAdmin({ item, handleClick }) {
               alignItems: "center",
               justifyContent: "center",
               backgroundColor: "#FFF",
-              borderRadius: "4px",
-              padding: "16px",
-              width: 600,
-              height: 700,
+              borderRadius: "8px",
+              padding: "45px",
+              width: 300,
+              height: 350,
             }}
           >
-            <Typography variant="h6" sx={{ marginBottom: "50px" }}>
+            <Typography
+              variant="h6"
+              sx={{ marginBottom: "50px", fontWeight: "bold" }}
+            >
               Edit Item
             </Typography>
-
-            <form onSubmit={(e) => handleSubmit(e, item)}>
-              <TextField
-                label="Name"
-                variant="outlined"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                sx={{ marginBottom: "8px", width: "100%", display: "block" }}
-              />
-              <TextField
-                label="Price"
-                variant="outlined"
-                value={price}
-                onChange={(e) => setPrice(e.target.value)}
-                sx={{ marginBottom: "8px", width: "100%", display: "block" }}
-              />
-              <TextField
-                label="Description"
-                variant="outlined"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                sx={{ marginBottom: "8px", width: "100%", display: "block" }}
-              />
-              <TextField
-                label="Category"
-                variant="outlined"
-                value={category}
-                onChange={(e) => setCategory(e.target.value)}
-                sx={{ marginBottom: "8px", width: "100%", display: "block" }}
-              />
-              <Box
-                sx={{ display: "flex", justifyContent: "center", mt: "auto" }}
-              >
-                <Button variant="contained" onClick={openModal}>
-                  Cancel
-                </Button>
-                <Button type="submit" variant="contained" color="primary">
-                  Save
-                </Button>
-              </Box>
-            </form>
+            <div>
+              <form onSubmit={(e) => handleSubmit(e, item)}>
+                <TextField
+                  label="Name"
+                  variant="outlined"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  sx={{ marginBottom: "10px", width: "100%", display: "block" }}
+                />
+                <TextField
+                  label="Price"
+                  variant="outlined"
+                  value={price}
+                  onChange={(e) => setPrice(e.target.value)}
+                  sx={{ marginBottom: "8px", width: "100%", display: "block" }}
+                />
+                <TextField
+                  label="Description"
+                  variant="outlined"
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                  sx={{ marginBottom: "10px", width: "100%", display: "block" }}
+                />
+                <ReactTags
+                  inputAttributes={{ style: { width: "100%" } }}
+                  value={category}
+                  onChange={setCategory}
+                  inputProps={{ placeholder: "Add category" }}
+                  sx={{ marginBottom: "8px", width: "100%", display: "block" }}
+                />
+                <Box
+                  sx={{ display: "flex", justifyContent: "center", mt: "auto" }}
+                >
+                  <Button
+                    variant="contained"
+                    onClick={openModal}
+                    sx={{
+                      display: "flex",
+                      justifyContent: "space-around",
+                      mt: "auto",
+                      width: "100%",
+                      length: "30px",
+                      marginRight: "8px",
+                    }}
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                    sx={{
+                      display: "flex",
+                      justifyContent: "space-around",
+                      mt: "auto",
+                      width: "100%",
+                      length: "30px",
+                      marginLeft: "8px",
+                    }}
+                  >
+                    Save
+                  </Button>
+                </Box>
+              </form>
+            </div>
           </Box>
         </Modal>
       ) : (

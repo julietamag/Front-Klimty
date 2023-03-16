@@ -8,7 +8,6 @@ import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { setMenu } from "../../state/menu";
 import { setData } from "../../state/data";
-import { setType } from "../../state/type";
 
 const DashboardArtists = () => {
   const dispatch = useDispatch();
@@ -24,7 +23,6 @@ const DashboardArtists = () => {
   // Search the artists artworks [1]
   const handleClose = (data) => {
     setAnchorEl(null);
-    dispatch(setType(data));
     axios
       .get(`http://localhost:3001/api/search/artworks/${data}`)
       .then((res) => {
