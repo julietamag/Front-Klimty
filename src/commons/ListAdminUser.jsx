@@ -1,20 +1,18 @@
 import * as React from "react";
-import { useEffect, useState } from "react";
-import { styled } from "@mui/material/styles";
+import { useState } from "react";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
-import ButtonBase from "@mui/material/ButtonBase";
 import EditRemoveButtons from "./EditRemoveButtons";
 import Modal from "@mui/material/Modal";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import axios from "axios";
-
-//import react tags
-import ReactTags from "react-tagsinput";
-import "react-tagsinput/react-tagsinput.css";
+import { useDispatch } from "react-redux";
+import { setBooleano } from "../state/adminProduct";
+import { ButtonBase } from "@mui/material";
+import { styled } from "@mui/material/styles";
 
 const Img = styled("img")({
   margin: "auto",
@@ -23,31 +21,39 @@ const Img = styled("img")({
   maxHeight: "100%",
 });
 
-export default function ListAdmin({ item, handleClick, editProducts }) {
+export default function ListAdminArtist({ item }) {
   // estado para confimar si abro el edit
   const [open, setOpen] = useState(false);
   // estados del edit en el modal
-  const [name, setName] = useState(item.name);
-  const [price, setPrice] = useState(item.price);
-  const [description, setDescription] = useState(item.description);
-  const [category, setCategory] = useState(item.category);
+  const [isAdmin, setIsAdmin] = useState(item.isAdmin);
+  const [state, setState] = useState(item.state);
 
+  const dispatch = useDispatch();
   const openModal = () => {
     setOpen(!open);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const productId = item.id;
-    const updatedItem = { ...item, name, price, description, category };
-    editProducts(updatedItem, productId);
+    const userId = localStorage.getItem("id");
+
+    if (userId) {
+      axios
+        .put(`http://localhost:3001/api/user/edit/${userId}`, {
+          isAdmin,
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
+    dispatch(setBooleano());
     setOpen();
   };
 
   return (
     <>
       {open ? (
-        <Modal open={open} openModal={openModal}>
+        <Modal open={open} openmodal={openModal}>
           <Box
             sx={{
               position: "absolute",
@@ -61,8 +67,7 @@ export default function ListAdmin({ item, handleClick, editProducts }) {
               backgroundColor: "#FFF",
               borderRadius: "8px",
               padding: "45px",
-              width: 300,
-              height: 350,
+              width: '70%'
             }}
           >
             <Typography
@@ -71,36 +76,16 @@ export default function ListAdmin({ item, handleClick, editProducts }) {
             >
               Edit Item
             </Typography>
-            <div>
+            <div style={{width: '100%'}}>
               <form onSubmit={(e) => handleSubmit(e, item)}>
                 <TextField
                   label="Name"
                   variant="outlined"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  sx={{ marginBottom: "10px", width: "100%", display: "block" }}
+                  value={isAdmin}
+                  onChange={(e) => setIsAdmin(e.target.value)}
+                  sx={{ marginBottom: "10px", width: "100%", display: "flex", justifyContent: 'center' }}
                 />
-                <TextField
-                  label="Price"
-                  variant="outlined"
-                  value={price}
-                  onChange={(e) => setPrice(e.target.value)}
-                  sx={{ marginBottom: "8px", width: "100%", display: "block" }}
-                />
-                <TextField
-                  label="Description"
-                  variant="outlined"
-                  value={description}
-                  onChange={(e) => setDescription(e.target.value)}
-                  sx={{ marginBottom: "10px", width: "100%", display: "block" }}
-                />
-                <ReactTags
-                  inputAttributes={{ style: { width: "100%" } }}
-                  value={category}
-                  onChange={setCategory}
-                  inputProps={{ placeholder: "Add category" }}
-                  sx={{ marginBottom: "8px", width: "100%", display: "block" }}
-                />
+
                 <Box
                   sx={{ display: "flex", justifyContent: "center", mt: "auto" }}
                 >
@@ -155,19 +140,16 @@ export default function ListAdmin({ item, handleClick, editProducts }) {
         }}
       >
         <Grid container spacing={2}>
-          <Grid item>
+        <Grid item>
             <ButtonBase sx={{ width: 270, height: 200 }}>
-              <Img alt="product art photo" src={item.photo_url} />
+              <Img alt="userPhoto" src={"https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"} />
             </ButtonBase>
           </Grid>
           <Grid item xs={12} sm container>
             <Grid item xs container direction="column" spacing={2}>
               <Grid item xs>
-                <Typography gutterBottom variant="subtitle1" component="div">
-                  {item.name}
-                </Typography>
                 <Typography variant="body2" gutterBottom>
-                  {item.artist.title}
+                  {item.fullName}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
                   ID: {item.id}
@@ -175,25 +157,14 @@ export default function ListAdmin({ item, handleClick, editProducts }) {
               </Grid>
               <Grid item>
                 <Typography sx={{ cursor: "pointer" }} variant="body2">
-                  Description...
-                </Typography>
-              </Grid>
-              <Grid item>
-                <Typography variant="subtitle1" component="div">
-                  ${item.price}
+                  {item.email}
                 </Typography>
               </Grid>
             </Grid>
 
             <Grid item>
               <Typography direction="column" component="div">
-                {
-                  <EditRemoveButtons
-                    item={item}
-                    handleClick={handleClick}
-                    openModal={openModal}
-                  />
-                }
+                {<EditRemoveButtons item={item} openModal={openModal} />}
               </Typography>
             </Grid>
           </Grid>
