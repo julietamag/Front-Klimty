@@ -15,8 +15,7 @@ export default function AdminView() {
     });
   }, []);
 
-  // funcion para destruir el item en el back
-  const handleClick = useCallback((item) => {
+  const handleClick = (item) => {
     console.log("item", item);
     localStorage.setItem("productId", item.id);
     const userId = localStorage.getItem("id");
@@ -25,30 +24,32 @@ export default function AdminView() {
       .then((res) => {
         console.log(res);
       });
-  }, []);
+  };
 
-  // funcion para editar el item en el back
-  const editProducts = useCallback((updatedItem, productId) => {
+  const editProducts = (updatedItem, productId) => {
+    console.log("numero", productId);
     localStorage.setItem("productId", productId);
     const userId = localStorage.getItem("id");
-    axios
-      .put(`http://localhost:3001/api/product/${userId}/edit/${productId}`, {
-        updatedItem,
-      })
-      .then((res) => {
-        console.log(res);
-      });
-  }, []);
+    productId &&
+      axios
+        .put(`http://localhost:3001/api/product/${userId}/edit/${productId}`, {
+          updatedItem,
+        })
+        .then((res) => {
+          console.log(res);
+        });
+  };
 
   useEffect(() => {
     const productId = localStorage.getItem("productId");
     console.log(productId);
-    axios
-      .get(`http://localhost:3001/api/product/${productId}`)
-      .then((res) => {
-        setData(...data, res.data);
-      })
-      .then(localStorage.removeItem("productId"));
+    productId &&
+      axios
+        .get(`http://localhost:3001/api/product/${productId}`)
+        .then((res) => {
+          setData([...data, res.data]);
+        })
+        .then(localStorage.removeItem("productId"));
   }, [handleClick, editProducts]);
 
   useEffect(() => {
