@@ -7,9 +7,11 @@ import {
   onAuthStateChanged,
   sendPasswordResetEmail,
 } from "firebase/auth";
-import { providerGoogle, providerFacebook } from "./firebaseConfig";
+import { providerGoogle, providerFacebook, storage } from "./firebaseConfig";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { v4 } from "uuid";
 
 export const signUp = (auth, email, password, name, lastName) => {
   createUserWithEmailAndPassword(auth, email, password).then(() => {
@@ -129,15 +131,12 @@ export const signUpFacebook = (auth) => {
 
 export const forgotPassword = (auth, email) => {
   axios.get("http://localhost:3001/api/user").then((users) => {
-
-      const userFilter = users.data.filter((user) => {
-        return user?.email === email;
-      });
-      console.log(userFilter); 
-      !userFilter[0]
-        ? toast.error("please enter a valid email")
-        : sendPasswordResetEmail(auth, email);
-    ;
+    const userFilter = users.data.filter((user) => {
+      return user?.email === email;
+    });
+    !userFilter[0]
+      ? toast.error("please enter a valid email")
+      : sendPasswordResetEmail(auth, email);
   });
 };
 
@@ -145,3 +144,14 @@ export const logOut = (auth) => {
   signOut(auth);
   localStorage.removeItem("id");
 };
+
+export async function uploadAvatar(file) {
+  if (file.type === "image/jpeg") {
+    const storageRef = ref(storage, v4());
+    await uploadBytes(storageRef, file);
+    const url = await getDownloadURL(storageRef);
+    return url;
+  } else {
+    toast.error("only jpg format");
+  }
+}

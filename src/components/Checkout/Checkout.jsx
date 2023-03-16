@@ -17,7 +17,8 @@ import Review from "./Review";
 import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
 import axios from "axios";
-import { resetCheckout} from "../../state/checkout";
+import { resetCheckout } from "../../state/checkout";
+import { setAxiosCart } from "../../state/cart";
 
 const steps = ["Shipping address", "Payment details", "Review your order"];
 
@@ -39,8 +40,8 @@ const theme = createTheme();
 export default function Checkout() {
   const [activeStep, setActiveStep] = React.useState(0);
   const checkout = useSelector((state) => state.checkout);
-  const dispatch = useDispatch()
-  const userId = localStorage.getItem('id')
+  const dispatch = useDispatch();
+  const userId = localStorage.getItem("id");
 
   const handleNext = () => {
     if (
@@ -55,21 +56,25 @@ export default function Checkout() {
     } else {
       toast.error(`Input cannot be null`);
     }
-    if(activeStep === 2) {
-      console.log(checkout);
-      axios.post(`http://localhost:3001/api/checkout/${userId}`, {checkout})
-      .then(checkoutFinal => {
-      dispatch(resetCheckout({name: "",
-      lastName: "",
-      address1: "",
-      address2: "",
-      city: "",
-      zip: "",
-      country: "",
-      region: "",}))
-        
-      })
-      .catch(err => console.error(err))
+    if (activeStep === 2) {
+      axios
+        .post(`http://localhost:3001/api/checkout/${userId}`, { checkout })
+        .then((checkoutFinal) => {
+          dispatch(
+            resetCheckout({
+              name: "",
+              lastName: "",
+              address1: "",
+              address2: "",
+              city: "",
+              zip: "",
+              country: "",
+              region: "",
+            })
+          );
+          dispatch(setAxiosCart([]));
+        })
+        .catch((err) => console.error(err));
     }
   };
 

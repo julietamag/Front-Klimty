@@ -6,6 +6,7 @@ import {
   MenuItem,
   MenuList,
   Tooltip,
+  Typography,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { onAuthStateChanged } from "firebase/auth";
@@ -16,12 +17,9 @@ import { setUid } from "../../state/uid";
 import { setPhoto } from "../../state/photo";
 import { useDispatch, useSelector } from "react-redux";
 
-//MUI Styles
-// import { boardUserStyles } from "../../styles/boardUserStyles";
-
 export const BoardUser = () => {
   const photo = useSelector((state) => state.photo);
-  const uid = useSelector((state) => state.uid);
+  const [name, setName] = useState("");
   const dispath = useDispatch();
   const [anchorElUser, setAnchorElUser] = useState(null);
   const userId = localStorage.getItem("id");
@@ -43,11 +41,24 @@ export const BoardUser = () => {
     );
   };
 
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      setName(user.displayName);
+      dispath(setPhoto(user.photoURL));
+    });
+  }, []);
+
   return (
     <Box sx={{ flexGrow: 0 }}>
       <Tooltip title="Open settings">
-        <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-          <Avatar alt="Remy Sharp" src={`${photo}`} />
+        <IconButton
+          onClick={handleOpenUserMenu}
+          color="secondary"
+          sx={{ p: 0 }}
+        >
+          <Avatar alt={`${name}`} src={`${photo}`} />
+          <Typography sx={{ ml: 2 }}>{`${name.split(" ")[0]}`}</Typography>
         </IconButton>
       </Tooltip>
       <Menu

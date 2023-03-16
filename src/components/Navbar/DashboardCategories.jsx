@@ -37,7 +37,6 @@ const DashboardCategories = () => {
 
   useEffect(() => {
     axios.get(`http://localhost:3001/api/search/${menu}`).then((data) => {
-      console.log("INFO", data.data);
       setCategories(data.data);
     });
   }, [menu]);

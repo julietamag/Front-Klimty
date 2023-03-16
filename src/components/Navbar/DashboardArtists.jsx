@@ -44,7 +44,6 @@ const DashboardArtists = () => {
       const artistsBack = data.data;
       const artists = artistsBack.map((artist) => artist.title);
       setArtists(artists);
-      console.log("esto llega del back", artists);
     });
   }, [menu]);
 
