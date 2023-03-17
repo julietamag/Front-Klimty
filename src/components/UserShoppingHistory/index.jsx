@@ -15,6 +15,7 @@ const ShoppingHistory = () => {
     axios
       .get(`http://localhost:3001/api/checkout/${userId}/history`)
       .then((res) => setPurchase(res.data));
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

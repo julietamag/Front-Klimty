@@ -47,6 +47,7 @@ export const BoardUser = () => {
       setName(user.displayName);
       dispath(setPhoto(user.photoURL));
     });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

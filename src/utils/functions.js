@@ -155,3 +155,14 @@ export async function uploadAvatar(file) {
     toast.error("only jpg format");
   }
 }
+
+export async function uploadProduct(file) {
+  if (file.type === "image/jpeg") {
+    const storageRef = ref(storage, v4());
+    await uploadBytes(storageRef, file);
+    const url = await getDownloadURL(storageRef);
+    return url;
+  } else {
+    toast.error("only jpg format");
+  }
+}

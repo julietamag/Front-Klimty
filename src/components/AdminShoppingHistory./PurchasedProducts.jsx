@@ -12,9 +12,10 @@ import Typography from "@mui/material/Typography";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import TableFooter from "@mui/material/TableFooter";
-import ReviewModal from "./ReviewModal"
+import ReviewModalAdmin from "./ReviewModal";
+import { Button } from "@mui/material";
 
-const PurchasedProducts = (props) => {
+const PurchasedProductsAdmin = (props) => {
   const { row } = props;
   const [open, setOpen] = React.useState(false);
 
@@ -30,19 +31,28 @@ const PurchasedProducts = (props) => {
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
         </TableCell>
-        <TableCell component="th" scope="row" align="right">
-            <Typography variant="h4">
-            Purchase #{row.cartId}
-            </Typography>
+        <TableCell component="th" scope="row" align="center">
+          <Typography variant="h4">Purchase #{row.cartId}</Typography>
+          <Button align="right">
+            <ReviewModalAdmin cart={row} />
+          </Button>
         </TableCell>
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box sx={{ margin: 1 }}>
-              <Typography variant="h6" gutterBottom component="div">
-                CART ID #{row.cartId}
-              </Typography>
+              <Box
+                sx={{
+                  display: "inline-flex",
+                  justifyContent: "space-evenly",
+                  alignContent: "center",
+                }}
+              >
+                <Typography variant="h6" gutterBottom component="div">
+                  CART ID #{row.cartId}
+                </Typography>
+              </Box>
               <Table size="small" aria-label="purchases">
                 <TableHead>
                   <TableRow>
@@ -64,19 +74,20 @@ const PurchasedProducts = (props) => {
                       <TableCell>$ {historyRow.product.price}</TableCell>
                       <TableCell align="right">{historyRow.quantity}</TableCell>
                       <TableCell align="right">
-                        $ {Math.round(
+                        ${" "}
+                        {Math.round(
                           historyRow.quantity * historyRow.product.price * 100
                         ) / 100}
                       </TableCell>
-                      <TableCell align="right"><ReviewModal product={historyRow.product}/></TableCell>
                     </TableRow>
                   ))}
                   <TableFooter variant="footer">
                     <TableRow hover="true" align="right">
                       <Typography variant="h5" color="text.secondary">
-                        Total($) {row.cart.products?.reduce((amount, item) => {
-                            return amount + (item.product.price * item.quantity)
-                        }, 0)} 
+                        Total($){" "}
+                        {row.cart.products?.reduce((amount, item) => {
+                          return amount + item.product.price * item.quantity;
+                        }, 0)}
                       </Typography>
                     </TableRow>
                   </TableFooter>
@@ -90,4 +101,4 @@ const PurchasedProducts = (props) => {
   );
 };
 
-export default PurchasedProducts;
+export default PurchasedProductsAdmin;
