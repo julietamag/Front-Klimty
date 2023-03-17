@@ -16,6 +16,7 @@ import { logOut } from "../../utils/functions";
 import { setUid } from "../../state/uid";
 import { setPhoto } from "../../state/photo";
 import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
 
 export const BoardUser = () => {
   const photo = useSelector((state) => state.photo);
@@ -23,6 +24,7 @@ export const BoardUser = () => {
   const dispath = useDispatch();
   const [anchorElUser, setAnchorElUser] = useState(null);
   const userId = localStorage.getItem("id");
+  const [isAdmin, setIsAdmin] = useState(false);
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
@@ -43,6 +45,8 @@ export const BoardUser = () => {
 
 
   useEffect(() => {
+    axios.get(`http://localhost:3001/api/user/${userId}`)
+    .then((data) => setIsAdmin(data.data.isAdmin))
     onAuthStateChanged(auth, (user) => {
       setName(user.displayName);
       dispath(setPhoto(user.photoURL));
@@ -89,9 +93,9 @@ export const BoardUser = () => {
             <Link style={{ textDecoration: "none", color: "#000" }} to="/">
               <MenuItem onClick={handleLogOut}>Logout</MenuItem>
             </Link>
-            <Link style={{ textDecoration: "none", color: "#000" }} to="admin">
+            {isAdmin ? (<Link style={{ textDecoration: "none", color: "#000" }} to="admin">
               <MenuItem>admin</MenuItem>
-            </Link>
+            </Link>) : null}
           </MenuList>
         ) : (
           <MenuList>
