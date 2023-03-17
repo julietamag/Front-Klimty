@@ -17,7 +17,6 @@ import { logOut } from "../../utils/functions";
 import { setUid } from "../../state/uid";
 import { setPhoto } from "../../state/photo";
 import { useDispatch, useSelector } from "react-redux";
-import axios from "axios";
 
 export const BoardUser = () => {
   const photo = useSelector((state) => state.photo);
