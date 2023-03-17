@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import ListAdminArtist from "../../commons/ListAdminArtist";
-import AddButton from "../../commons/AddButton";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import ModalAddArtist from "../../commons/ModalAddArtist";
 
 export default function AdminViewArtist() {
   const [data, setData] = useState([]);
@@ -24,12 +24,11 @@ export default function AdminViewArtist() {
     });
   }, [booleano]);
 
-
   return (
     <>
       <div className="container">
         <div className="newProductContainer">
-          <AddButton />
+          <ModalAddArtist />
         </div>
         <div className="productsContainer">
           {data &&

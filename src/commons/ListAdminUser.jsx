@@ -10,12 +10,7 @@ import Box from "@mui/material/Box";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { setBooleano } from "../state/adminProduct";
-import {
-  ButtonBase,
-  FormGroup,
-  MenuItem,
-  Select,
-} from "@mui/material";
+import { ButtonBase, FormGroup, MenuItem, Select } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { useNavigate } from "react-router";
 
@@ -26,7 +21,7 @@ const Img = styled("img")({
   maxHeight: "100%",
 });
 
-export default function ListAdminArtist({ item }) {
+export default function ListAdminUser({ item }) {
   // estado para confimar si abro el edit
   const [open, setOpen] = useState(false);
   // estados del edit en el modal
@@ -55,7 +50,7 @@ export default function ListAdminArtist({ item }) {
   };
 
   function handleClickUser() {
-    navigate(`/admin/user/history/${item.id}`)
+    navigate(`/admin/user/history/${item.id}`);
   }
 
   return (
@@ -154,7 +149,7 @@ export default function ListAdminArtist({ item }) {
             theme.palette.mode === "dark" ? "#1A2027" : "#fff",
         }}
       >
-        <Grid container spacing={2} onClick={handleClickUser}>
+        <Grid container spacing={2}>
           <Grid item>
             <ButtonBase sx={{ width: 270, height: 200 }}>
               <Img
@@ -186,6 +181,9 @@ export default function ListAdminArtist({ item }) {
               <Typography direction="column" component="div">
                 {<EditRemoveButtons item={item} openModal={openModal} />}
               </Typography>
+              <Button variant="contained" onClick={handleClickUser}>
+                HISTORY
+              </Button>
             </Grid>
           </Grid>
         </Grid>

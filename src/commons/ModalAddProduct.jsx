@@ -1,22 +1,25 @@
 import * as React from "react";
-import { useState } from "react";
-import { styled } from "@mui/material/styles";
-import Grid from "@mui/material/Grid";
-import Paper from "@mui/material/Paper";
+import { useState, useEffect } from "react";
 import Typography from "@mui/material/Typography";
-import ButtonBase from "@mui/material/ButtonBase";
-import EditRemoveButtons from "./EditRemoveButtons";
 import Modal from "@mui/material/Modal";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
+import MenuItem from "@mui/material/MenuItem";
+import Menu from "@mui/material/Menu";
 import Box from "@mui/material/Box";
-
+import axios from "axios";
+import { styled } from "@mui/material/styles";
 //import react tags
 import ReactTags from "react-tagsinput";
 import "react-tagsinput/react-tagsinput.css";
-import axios from "axios";
-import { useDispatch } from "react-redux";
+import AddButton from "./AddButton";
+import { toast } from "react-hot-toast";
+import { uploadProduct } from "../utils/functions";
+import { updateProfile } from "firebase/auth";
+import { auth } from "../utils/firebaseConfig";
+import { async } from "@firebase/util";
 import { setBooleano } from "../state/adminProduct";
+import { useDispatch } from "react-redux";
 
 const Img = styled("img")({
   margin: "auto",
@@ -25,47 +28,88 @@ const Img = styled("img")({
   maxHeight: "100%",
 });
 
-export default function ListAdminProduct({ item }) {
+export default function ModalAddProduct() {
   // estado para confimar si abro el edit
   const [open, setOpen] = useState(false);
   // estados del edit en el modal
-  const [name, setName] = useState(item.name);
-  const [price, setPrice] = useState(item.price);
-  const [description, setDescription] = useState(item.description);
-  const [category, setCategory] = useState(item.category);
-  const dispatch = useDispatch()
+  const [name, setName] = useState("");
+  const [price, setPrice] = useState("");
+  const [description, setDescription] = useState("");
+  const [category, setCategory] = useState([]);
+  const [artists, setArtists] = useState([]);
+  const [artistId, setArtistId] = useState("");
+  const [selectedArtist, setSelectedArtist] = useState(null);
+  const [photo_url, setPhoto_url] = useState("");
+  const dispatch = useDispatch();
+
   const openModal = () => {
     setOpen(!open);
   };
 
+  async function handleUploadPhoto(e) {
+    const result = await uploadProduct(e.target.files[0]);
+    console.log(result);
+    setPhoto_url(result);
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    const productId = item.id;
     const userId = localStorage.getItem("id");
-    if (productId && userId) {
-      axios
-        .put(`http://localhost:3001/api/product/${userId}/edit/${item.id}`, {
-          name,
-          price,
-          description,
-          category,
-        })
-        .catch((error) => {
-          console.error(error);
-        });
+
+    if ((price, name, artistId)) {
+      if (userId) {
+        axios
+          .post(`http://localhost:3001/api/product/${userId}/add/`, {
+            name,
+            price,
+            description,
+            category,
+            photo_url,
+            artistId,
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+        toast.success("Successfully added your product");
+      }
+    } else {
+      toast.error("You need to set a name, a price and an artist");
     }
+
     setName("");
     setPrice("");
     setDescription("");
-    setCategory("");
-    dispatch(setBooleano())
-    setOpen();
+    setPhoto_url("");
+    setCategory([]);
+    dispatch(setBooleano());
+    setOpen(!open);
   };
 
+  useEffect(() => {
+    axios.get(`http://localhost:3001/api/artist`).then((data) => {
+      const artistsBack = data.data;
+      const artists = artistsBack?.map((artist) => artist.title);
+      setArtists(artists);
+    });
+  }, [open]);
 
+  //manejo del menu artistas
+  const [anchorEl, setAnchorEl] = useState(null);
+  const openArtist = Boolean(anchorEl);
+  const handleClose = (data) => {
+    setAnchorEl(null);
+  };
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
 
   return (
     <>
+      <div>
+        <AddButton openModal={openModal} />
+      </div>
+
       {open ? (
         <Modal open={open} openmodal={openModal}>
           <Box
@@ -81,18 +125,18 @@ export default function ListAdminProduct({ item }) {
               backgroundColor: "#FFF",
               borderRadius: "8px",
               padding: "45px",
-              width: 300,
-              height: 350,
+              width: 350,
+              height: 450,
             }}
           >
             <Typography
               variant="h6"
               sx={{ marginBottom: "50px", fontWeight: "bold" }}
             >
-              Edit Item
+              Add Item
             </Typography>
             <div>
-              <form onSubmit={(e) => handleSubmit(e, item)}>
+              <form onSubmit={(e) => handleSubmit(e)}>
                 <TextField
                   label="Name"
                   variant="outlined"
@@ -121,6 +165,50 @@ export default function ListAdminProduct({ item }) {
                   inputProps={{ placeholder: "Add category" }}
                   sx={{ marginBottom: "8px", width: "100%", display: "block" }}
                 />
+                <Button
+                  id="basic-button"
+                  aria-controls={openArtist ? "basic-menu" : undefined}
+                  aria-haspopup="true"
+                  aria-expanded={openArtist ? "true" : undefined}
+                  onClick={handleClick}
+                >
+                  {selectedArtist ? selectedArtist : "Artists"}
+                </Button>
+
+                {photo_url ? (
+                  "selected picture"
+                ) : (
+                  <input
+                    type="file"
+                    name="Upload"
+                    onChange={handleUploadPhoto}
+                  />
+                )}
+
+                <Menu
+                  id="basic-menu"
+                  anchorEl={anchorEl}
+                  open={openArtist}
+                  onClose={handleClose}
+                  MenuListProps={{
+                    "aria-labelledby": "basic-button",
+                  }}
+                >
+                  {artists?.map((artist, i) => {
+                    return (
+                      <MenuItem
+                        key={i}
+                        onClick={() => {
+                          setArtistId(i + 1);
+                          setSelectedArtist(artist);
+                        }}
+                      >
+                        {artist}
+                      </MenuItem>
+                    );
+                  })}
+                </Menu>
+
                 <Box
                   sx={{ display: "flex", justifyContent: "center", mt: "auto" }}
                 >
@@ -151,7 +239,7 @@ export default function ListAdminProduct({ item }) {
                       marginLeft: "8px",
                     }}
                   >
-                    Save
+                    Add
                   </Button>
                 </Box>
               </form>
@@ -161,58 +249,6 @@ export default function ListAdminProduct({ item }) {
       ) : (
         ""
       )}
-      <Paper
-        sx={{
-          p: 2,
-          margin: "auto",
-          borderRadius: 0,
-          borderBottom: "2px solid #f4f0e8",
-          maxWidth: 750,
-          flexGrow: 1,
-          minHeight: 200,
-          backgroundColor: (theme) =>
-            theme.palette.mode === "dark" ? "#1A2027" : "#fff",
-        }}
-      >
-        <Grid container spacing={2}>
-          <Grid item>
-            <ButtonBase sx={{ width: 270, height: 200 }}>
-              <Img alt="product art photo" src={item?.photo_url} />
-            </ButtonBase>
-          </Grid>
-          <Grid item xs={12} sm container>
-            <Grid item xs container direction="column" spacing={2}>
-              <Grid item xs>
-                <Typography gutterBottom variant="subtitle1" component="div">
-                  {item?.name}
-                </Typography>
-                <Typography variant="body2" gutterBottom>
-                  {item.artist?.title}
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  ID: {item?.id}
-                </Typography>
-              </Grid>
-              <Grid item>
-                <Typography sx={{ cursor: "pointer" }} variant="body2">
-                  Description...
-                </Typography>
-              </Grid>
-              <Grid item>
-                <Typography variant="subtitle1" component="div">
-                  ${item?.price}
-                </Typography>
-              </Grid>
-            </Grid>
-
-            <Grid item>
-              <Typography direction="column" component="div">
-                {<EditRemoveButtons item={item} openModal={openModal} />}
-              </Typography>
-            </Grid>
-          </Grid>
-        </Grid>
-      </Paper>
     </>
   );
 }

@@ -1,25 +1,25 @@
 import * as React from "react";
 import { useState } from "react";
-import Grid from "@mui/material/Grid";
-import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
-import EditRemoveButtons from "./EditRemoveButtons";
 import Modal from "@mui/material/Modal";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import axios from "axios";
+import "react-tagsinput/react-tagsinput.css";
+import AddButton from "./AddButton";
+import { toast } from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { setBooleano } from "../state/adminProduct";
 
-export default function ListAdminArtist({ item }) {
+export default function ModalAddArtist() {
   // estado para confimar si abro el edit
   const [open, setOpen] = useState(false);
   // estados del edit en el modal
-  const [title, setTitle] = useState(item.title);
-  const [description, setDescription] = useState(item.description);
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const dispatch = useDispatch()
 
-  const dispatch = useDispatch();
   const openModal = () => {
     setOpen(!open);
   };
@@ -28,25 +28,35 @@ export default function ListAdminArtist({ item }) {
     e.preventDefault();
     const userId = localStorage.getItem("id");
 
-    if (userId) {
-      axios
-        .put(`http://localhost:3001/api/artist/${userId}/edit/${item.id}`, {
-          title,
-          description,
-        })
-        .then(() => dispatch(setBooleano()))
-        .catch((error) => {
-          console.error(error);
-        });
+    if ((title, description)) {
+      if (userId) {
+        axios
+          .post(`http://localhost:3001/api/artist/${userId}/add`, {
+            title,
+
+            description,
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+        toast.success("Successfully added your artist");
+        dispatch(setBooleano())
+      }
+    } else {
+      toast.error("You need to set a title and a description");
     }
+
     setTitle("");
     setDescription("");
-    dispatch(setBooleano());
-    setOpen();
+    setOpen(!open);
   };
 
   return (
     <>
+      <div>
+        <AddButton openModal={openModal} />
+      </div>
+
       {open ? (
         <Modal open={open} openmodal={openModal}>
           <Box
@@ -62,33 +72,35 @@ export default function ListAdminArtist({ item }) {
               backgroundColor: "#FFF",
               borderRadius: "8px",
               padding: "45px",
-              width: '70%'
+              width: 300,
+              height: 350,
             }}
           >
             <Typography
               variant="h6"
               sx={{ marginBottom: "50px", fontWeight: "bold" }}
             >
-              Edit Item
+              Add Artist
             </Typography>
-            <div style={{width: '100%'}}>
-              <form onSubmit={(e) => handleSubmit(e, item)}>
+            <div>
+              <form onSubmit={(e) => handleSubmit(e)}>
                 <TextField
-                  label="Name"
+                  label="Title"
                   variant="outlined"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
-                  sx={{ marginBottom: "10px", width: "100%", display: "flex", justifyContent: 'center' }}
+                  sx={{ marginBottom: "10px", width: "100%", display: "block" }}
                 />
 
                 <TextField
-               multiline
                   label="Description"
                   variant="outlined"
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
-                  sx={{ marginBottom: "10px", width: "100%", display: "flex", justifyContent: 'center'  }}
+                  sx={{ marginBottom: "10px", width: "100%", display: "block" }}
                 />
+
+                
 
                 <Box
                   sx={{ display: "flex", justifyContent: "center", mt: "auto" }}
@@ -120,7 +132,7 @@ export default function ListAdminArtist({ item }) {
                       marginLeft: "8px",
                     }}
                   >
-                    Save
+                    Add
                   </Button>
                 </Box>
               </form>
@@ -130,45 +142,6 @@ export default function ListAdminArtist({ item }) {
       ) : (
         ""
       )}
-      <Paper
-        sx={{
-          p: 2,
-          margin: "auto",
-          borderRadius: 0,
-          borderBottom: "2px solid #f4f0e8",
-          maxWidth: 750,
-          flexGrow: 1,
-          minHeight: 200,
-          backgroundColor: (theme) =>
-            theme.palette.mode === "dark" ? "#1A2027" : "#fff",
-        }}
-      >
-        <Grid container spacing={2}>
-          <Grid item xs={12} sm container>
-            <Grid item xs container direction="column" spacing={2}>
-              <Grid item xs>
-                <Typography variant="body2" gutterBottom>
-                  {item.title}
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  ID: {item.id}
-                </Typography>
-              </Grid>
-              <Grid item>
-                <Typography sx={{ cursor: "pointer" }} variant="body2">
-                  {item.description}
-                </Typography>
-              </Grid>
-            </Grid>
-
-            <Grid item>
-              <Typography direction="column" component="div">
-                {<EditRemoveButtons item={item} openModal={openModal} />}
-              </Typography>
-            </Grid>
-          </Grid>
-        </Grid>
-      </Paper>
     </>
   );
 }

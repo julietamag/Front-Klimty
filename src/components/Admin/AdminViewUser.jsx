@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import ListAdminUser from "../../commons/ListAdminUser";
-import AddButton from "../../commons/AddButton";
 import axios from "axios";
 import { useSelector } from "react-redux";
 
 export default function AdminViewUser() {
   const [data, setData] = useState([]);
   const booleano = useSelector((state) => state.adminProduct);
+
 
   // Renderizado inicial de pagina.
   useEffect(() => {
@@ -27,9 +27,6 @@ export default function AdminViewUser() {
   return (
     <>
       <div className="container">
-        <div className="newProductContainer">
-          <AddButton />
-        </div>
         <div className="productsContainer">
           {data &&
             data.map((item, i) => {

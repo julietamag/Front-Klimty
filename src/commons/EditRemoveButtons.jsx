@@ -42,9 +42,11 @@ export default function EditRemoveButtons({ item, openModal }) {
       <Fab color="secondary" aria-label="edit">
         <EditIcon onClick={() => openModal()} />
       </Fab>
-      <Fab color="error">
-        <DeleteIcon onClick={handleClick} />
-      </Fab>
+      {!item.uid && (
+        <Fab color="error">
+          <DeleteIcon onClick={handleClick} />
+        </Fab>
+      )}
     </Box>
   );
 }
