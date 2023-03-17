@@ -8,6 +8,7 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
+import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../utils/firebaseConfig";
@@ -43,15 +44,22 @@ export const BoardUser = () => {
     );
   };
 
-
   useEffect(() => {
     axios.get(`http://localhost:3001/api/user/${userId}`)
     .then((data) => setIsAdmin(data.data.isAdmin))
     onAuthStateChanged(auth, (user) => {
-      setName(user.displayName);
-      dispath(setPhoto(user.photoURL));
+      dispath(setPhoto(user.photoURL))
+      if (user.providerData[0].providerId === "password") {
+        axios.get(`http://localhost:3001/api/user/${userId}`).then((data) => {
+          setName(data.data.fullName);
+        });
+      
+      } else if (user.providerData[0].providerId === "google.com") {
+        setName(user.displayName);
+      }
+      
     });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -63,7 +71,7 @@ export const BoardUser = () => {
           sx={{ p: 0 }}
         >
           <Avatar alt={`${name}`} src={`${photo}`} />
-          <Typography sx={{ ml: 2 }}>{`${name.split(" ")[0]}`}</Typography>
+          <Typography sx={{ ml: 2 }}>{`${name?.split(" ")[0]}`}</Typography>
         </IconButton>
       </Tooltip>
       <Menu
