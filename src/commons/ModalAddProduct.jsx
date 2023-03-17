@@ -19,11 +19,11 @@ import { useDispatch } from "react-redux";
 export default function ModalAddProduct() {
   const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
-  const [price, setPrice] = useState("");
+  const [price, setPrice] = useState(0);
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState([]);
   const [artists, setArtists] = useState([]);
-  const [artistId, setArtistId] = useState("");
+  const [artistId, setArtistId] = useState(0);
   const [selectedArtist, setSelectedArtist] = useState(null);
   const [photo_url, setPhoto_url] = useState("");
   const dispatch = useDispatch();
@@ -62,7 +62,7 @@ export default function ModalAddProduct() {
     }
 
     setName("");
-    setPrice("");
+    setPrice(0);
     setDescription("");
     setPhoto_url("");
     setCategory([]);
