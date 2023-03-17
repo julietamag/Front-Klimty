@@ -6,6 +6,7 @@ import { auth } from "../utils/firebaseConfig";
 import { setPhoto } from "../state/photo";
 import { onAuthStateChanged } from "firebase/auth";
 import { useDispatch, useSelector } from "react-redux";
+import { Button } from "@mui/material";
 
 const Profile = () => {
   const [file, setFile] = useState(null);
@@ -56,7 +57,13 @@ const Profile = () => {
           <div className="userProfileImage">
             <img className="userProfileImg" alt={`${name}`} src={`${photo}`} />
             <div>
-              <button onClick={handleChange}>CHANGE</button>
+              <Button
+                variant="contained"
+                sx={{ mb: "2rem" }}
+                onClick={handleChange}
+              >
+                CHANGE
+              </Button>
             </div>
           </div>
         </div>
@@ -86,10 +93,18 @@ const Profile = () => {
                   type="file"
                   name="Upload"
                   onChange={(e) => setFile(e.target.files[0])}
+                  accept="image/*"
+                  style={{ display: "none" }}
+                  id="raised-button-file"
+                  multiple
                 />
               )}
 
-              <button>Upload</button>
+              <label htmlFor="raised-button-file">
+                <Button variant="outlined" component="span">
+                  Upload Photo
+                </Button>
+              </label>
             </form>
 
             <div className="userProfileInfo">

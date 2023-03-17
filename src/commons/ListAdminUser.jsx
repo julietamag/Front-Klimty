@@ -177,7 +177,7 @@ export default function ListAdminUser({ item }) {
               </Grid>
             </Grid>
 
-            <Grid item>
+            <Grid item sx={{display:'flex', alignItems:'center', justifyContent:'space-between', flexDirection:'column'}}>
               <Typography direction="column" component="div">
                 {<EditRemoveButtons item={item} openModal={openModal} />}
               </Typography>

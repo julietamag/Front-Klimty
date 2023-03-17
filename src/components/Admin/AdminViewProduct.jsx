@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from "react";
 import ListAdminProduct from "../../commons/ListAdminProduct";
-import AddButton from "../../commons/AddButton";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import ModalAddProduct from "../../commons/ModalAddProduct";
-// import { useNavigate } from "react-router";
+import { Button } from "@mui/material";
+import ArrowBackIosNewOutlinedIcon from "@mui/icons-material/ArrowBackIosNewOutlined";
+import { useNavigate } from "react-router";
 
 export default function AdminViewProduct() {
   const [data, setData] = useState([]);
   const booleano = useSelector((state) => state.adminProduct);
+  const navigate = useNavigate()
 
   // Renderizado inicial de pagina.
   useEffect(() => {
@@ -28,7 +30,10 @@ export default function AdminViewProduct() {
   return (
     <>
       <div className="container">
-        <div className="newProductContainer">
+      <Button variant="text" onClick={() => navigate('/admin')} sx={{ mb: 10 }}>
+        <ArrowBackIosNewOutlinedIcon color="black" /> GO BACK
+      </Button>
+        <div className="newProductContainer" >
           <ModalAddProduct />
         </div>
         <div className="productsContainer">

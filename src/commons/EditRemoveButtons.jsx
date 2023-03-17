@@ -17,21 +17,18 @@ export default function EditRemoveButtons({ item, openModal }) {
       return axios
         .delete(`http://localhost:3001/api/product/${userId}/${item.id}`)
         .then((res) => {
-          console.log(res);
           dispatch(setBooleano());
         });
     } else if (item.uid) {
       return axios
         .delete(`http://localhost:3001/api/user/${userId}/delete/${item.id}`)
         .then((res) => {
-          console.log(res);
           dispatch(setBooleano());
         });
     } else if (item.title) {
       return axios
         .delete(`http://localhost:3001/api/artist/${userId}/delete/${item.id}`)
         .then((res) => {
-          console.log(res);
           dispatch(setBooleano());
         });
     }

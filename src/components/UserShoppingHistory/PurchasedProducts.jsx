@@ -30,7 +30,7 @@ const PurchasedProducts = (props) => {
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
         </TableCell>
-        <TableCell component="th" scope="row" align="center">
+        <TableCell component="th" scope="row" align="right">
             <Typography variant="h4">
             Purchase #{row.cartId}
             </Typography>

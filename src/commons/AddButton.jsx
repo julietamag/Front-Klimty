@@ -5,12 +5,11 @@ import AddIcon from "@mui/icons-material/Add";
 
 export default function AddButton({ openModal }) {
   return (
-    <Box sx={{ "& > :not(style)": { m: 1 }, margin: "auto 0" }}>
-      <Fab color="primary" aria-label="add">
+    <Box>
+      <Fab color="primary" aria-label="add" >
         <AddIcon
           onClick={() => {
             openModal();
-            console.log("ME EJECUTE");
           }}
         />
       </Fab>

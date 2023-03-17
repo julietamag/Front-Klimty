@@ -78,7 +78,7 @@ export default function ListAdminArtist({ item }) {
                   variant="outlined"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
-                  sx={{ marginBottom: "10px", width: "100%", display: "flex", justifyContent: 'center' }}
+                  sx={{ marginBottom: "10px", width: "100%"}}
                 />
 
                 <TextField
@@ -87,7 +87,7 @@ export default function ListAdminArtist({ item }) {
                   variant="outlined"
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
-                  sx={{ marginBottom: "10px", width: "100%", display: "flex", justifyContent: 'center'  }}
+                  sx={{ marginBottom: "10px", width: "100%"}}
                 />
 
                 <Box

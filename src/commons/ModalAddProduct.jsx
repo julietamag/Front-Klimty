@@ -8,30 +8,16 @@ import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import Box from "@mui/material/Box";
 import axios from "axios";
-import { styled } from "@mui/material/styles";
-//import react tags
 import ReactTags from "react-tagsinput";
 import "react-tagsinput/react-tagsinput.css";
 import AddButton from "./AddButton";
 import { toast } from "react-hot-toast";
 import { uploadProduct } from "../utils/functions";
-import { updateProfile } from "firebase/auth";
-import { auth } from "../utils/firebaseConfig";
-import { async } from "@firebase/util";
 import { setBooleano } from "../state/adminProduct";
 import { useDispatch } from "react-redux";
 
-const Img = styled("img")({
-  margin: "auto",
-  display: "block",
-  maxWidth: "100%",
-  maxHeight: "100%",
-});
-
 export default function ModalAddProduct() {
-  // estado para confimar si abro el edit
   const [open, setOpen] = useState(false);
-  // estados del edit en el modal
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
@@ -48,7 +34,6 @@ export default function ModalAddProduct() {
 
   async function handleUploadPhoto(e) {
     const result = await uploadProduct(e.target.files[0]);
-    console.log(result);
     setPhoto_url(result);
   }
 
@@ -137,26 +122,37 @@ export default function ModalAddProduct() {
             </Typography>
             <div>
               <form onSubmit={(e) => handleSubmit(e)}>
+                {photo_url ? (
+                  "selected picture"
+                ) : (
+                  <Button variant="outlined" sx={{marginBottom:'1rem', width: '100%'}} component="label">
+                    <input
+                      type="file"
+                      name="Upload"
+                      onChange={handleUploadPhoto}
+                    />
+                  </Button>
+                )}
                 <TextField
                   label="Name"
                   variant="outlined"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  sx={{ marginBottom: "10px", width: "100%", display: "block" }}
+                  sx={{ marginBottom: "10px", width: "100%"}}
                 />
                 <TextField
                   label="Price"
                   variant="outlined"
                   value={price}
                   onChange={(e) => setPrice(e.target.value)}
-                  sx={{ marginBottom: "8px", width: "100%", display: "block" }}
+                  sx={{ marginBottom: "8px", width: "100%"}}
                 />
                 <TextField
                   label="Description"
                   variant="outlined"
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
-                  sx={{ marginBottom: "10px", width: "100%", display: "block" }}
+                  sx={{ marginBottom: "10px", width: "100%"}}
                 />
                 <ReactTags
                   inputAttributes={{ style: { width: "100%" } }}
@@ -167,6 +163,8 @@ export default function ModalAddProduct() {
                 />
                 <Button
                   id="basic-button"
+                  variant="contained"
+                  sx={{margin: '1rem auto', width:'100%'}}
                   aria-controls={openArtist ? "basic-menu" : undefined}
                   aria-haspopup="true"
                   aria-expanded={openArtist ? "true" : undefined}
@@ -175,16 +173,7 @@ export default function ModalAddProduct() {
                   {selectedArtist ? selectedArtist : "Artists"}
                 </Button>
 
-                {photo_url ? (
-                  "selected picture"
-                ) : (
-                  <input
-                    type="file"
-                    name="Upload"
-                    onChange={handleUploadPhoto}
-                  />
-                )}
-
+                
                 <Menu
                   id="basic-menu"
                   anchorEl={anchorEl}
@@ -194,6 +183,7 @@ export default function ModalAddProduct() {
                     "aria-labelledby": "basic-button",
                   }}
                 >
+
                   {artists?.map((artist, i) => {
                     return (
                       <MenuItem
@@ -209,8 +199,10 @@ export default function ModalAddProduct() {
                   })}
                 </Menu>
 
+  
+
                 <Box
-                  sx={{ display: "flex", justifyContent: "center", mt: "auto" }}
+                  sx={{ display: "flex", justifyContent: "center", alignItems:'center', mt: "auto" }}
                 >
                   <Button
                     variant="contained"
