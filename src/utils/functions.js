@@ -106,12 +106,12 @@ export const signUpFacebook = (auth) => {
             const lastName = res.user.displayName.split(" ")[1];
             const { email, uid } = res.user;
 
-            axios.post(`https://klimty.onrender.com/api/user`, {}, {withCredentials: true} {
+            axios.post(`https://klimty.onrender.com/api/user`, {
               name,
               lastName,
               email,
               uid,
-            });
+            }, {withCredentials: true});
           }
         });
       })
