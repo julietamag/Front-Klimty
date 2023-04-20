@@ -19,7 +19,7 @@ export const SearchInput = () => {
 
   useEffect(() => {
     axios
-      .get(`https://klimty.onrender.com/api/search/product?input=${search}`)
+      .get(`https://klimty.onrender.com/api/search/product?input=${search}`, {withCredentials: true})
       .then((res) => {
         dispatch(setData(res.data));
       })

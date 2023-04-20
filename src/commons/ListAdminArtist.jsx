@@ -33,7 +33,7 @@ export default function ListAdminArtist({ item }) {
         .put(`https://klimty.onrender.com/api/artist/${userId}/edit/${item.id}`, {
           title,
           description,
-        })
+        }, {withCredentials: true})
         .then(() => dispatch(setBooleano()))
         .catch((error) => {
           console.error(error);

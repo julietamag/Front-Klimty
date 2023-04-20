@@ -34,7 +34,7 @@ const DetailsCard = () => {
   useEffect(() => {
     axios
       .get(
-        `https://klimty.onrender.com/api/product/${location.pathname.split("/")[2]}`
+        `https://klimty.onrender.com/api/product/${location.pathname.split("/")[2]}`, {withCredentials: true}
       )
       .then((detail) => {
         setDetail(detail.data);
@@ -47,7 +47,7 @@ const DetailsCard = () => {
     axios
       .post(`https://klimty.onrender.com/api/cart/${userId}/update/${detail.id}`, {
         products: cart,
-      })
+      }, {withCredentials: true})
       .catch((err) => console.error(err));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cart]);

@@ -25,7 +25,7 @@ const DashboardCategories = () => {
   const handleClose = (data) => {
     setAnchorEl(null);
     axios
-      .get(`https://klimty.onrender.com/api/search/products/${data}`)
+      .get(`https://klimty.onrender.com/api/search/products/${data}`, {withCredentials: true})
       .then((res) => {
         dispatch(setData(res.data));
       })
@@ -35,7 +35,7 @@ const DashboardCategories = () => {
   };
 
   useEffect(() => {
-    axios.get(`https://klimty.onrender.com/api/search/${menu}`).then((data) => {
+    axios.get(`https://klimty.onrender.com/api/search/${menu}`, {withCredentials: true}).then((data) => {
       setCategories(data.data);
     });
   }, [menu]);

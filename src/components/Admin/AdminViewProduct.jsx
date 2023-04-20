@@ -14,14 +14,14 @@ export default function AdminViewProduct() {
 
   // Renderizado inicial de pagina.
   useEffect(() => {
-    axios.get(`https://klimty.onrender.com/api/product`).then((res) => {
+    axios.get(`https://klimty.onrender.com/api/product`, {withCredentials: true}).then((res) => {
       const sortedData = res.data.sort((a, b) => a.id - b.id);
       setData(sortedData);
     });
   }, []);
 
   useEffect(() => {
-    axios.get(`https://klimty.onrender.com/api/product`).then((res) => {
+    axios.get(`https://klimty.onrender.com/api/product`, {withCredentials: true}).then((res) => {
       const sortedData = res.data.sort((a, b) => a.id - b.id);
       setData(sortedData);
     });

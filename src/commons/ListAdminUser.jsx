@@ -40,7 +40,7 @@ export default function ListAdminUser({ item }) {
       axios
         .put(`https://klimty.onrender.com/api/user/${userId}/edit/${item.id}`, {
           isAdmin,
-        })
+        }, {withCredentials: true})
         .catch((error) => {
           console.error(error);
         });

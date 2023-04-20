@@ -51,7 +51,7 @@ export default function ModalAddProduct() {
             category,
             photo_url,
             artistId,
-          })
+          }, {withCredentials: true})
           .catch((error) => {
             console.error(error);
           });
@@ -71,7 +71,7 @@ export default function ModalAddProduct() {
   };
 
   useEffect(() => {
-    axios.get(`https://klimty.onrender.com/api/artist`).then((data) => {
+    axios.get(`https://klimty.onrender.com/api/artist`, {withCredentials: true}).then((data) => {
       const artistsBack = data.data;
       const artists = artistsBack?.map((artist) => artist.title);
       setArtists(artists);
