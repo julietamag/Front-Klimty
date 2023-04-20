@@ -38,7 +38,7 @@ export default function ListAdminUser({ item }) {
 
     if (userId) {
       axios
-        .put(`${process.env.REACT_APP_URL}/api/user/${userId}/edit/${item.id}`, {
+        .put(`https://klimty.onrender.com/api/user/${userId}/edit/${item.id}`, {
           isAdmin,
         })
         .catch((error) => {

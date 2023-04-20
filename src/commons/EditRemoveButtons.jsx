@@ -15,19 +15,19 @@ export default function EditRemoveButtons({ item, openModal }) {
     const userId = localStorage.getItem("id");
     if (item.price) {
       return axios
-        .delete(`${process.env.REACT_APP_URL}/api/product/${userId}/${item.id}`)
+        .delete(`https://klimty.onrender.com/api/product/${userId}/${item.id}`)
         .then((res) => {
           dispatch(setBooleano());
         });
     } else if (item.uid) {
       return axios
-        .delete(`${process.env.REACT_APP_URL}/api/user/${userId}/delete/${item.id}`)
+        .delete(`https://klimty.onrender.com/api/user/${userId}/delete/${item.id}`)
         .then((res) => {
           dispatch(setBooleano());
         });
     } else if (item.title) {
       return axios
-        .delete(`${process.env.REACT_APP_URL}/api/artist/${userId}/delete/${item.id}`)
+        .delete(`https://klimty.onrender.com/api/artist/${userId}/delete/${item.id}`)
         .then((res) => {
           dispatch(setBooleano());
         });

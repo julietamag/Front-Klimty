@@ -19,7 +19,7 @@ export const SearchInput = () => {
 
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_URL}/api/search/product?input=${search}`)
+      .get(`https://klimty.onrender.com/api/search/product?input=${search}`)
       .then((res) => {
         dispatch(setData(res.data));
       })

@@ -34,7 +34,7 @@ const DetailsCard = () => {
   useEffect(() => {
     axios
       .get(
-        `${process.env.REACT_APP_URL}/api/product/${location.pathname.split("/")[2]}`
+        `https://klimty.onrender.com/api/product/${location.pathname.split("/")[2]}`
       )
       .then((detail) => {
         setDetail(detail.data);
@@ -45,7 +45,7 @@ const DetailsCard = () => {
 
   useEffect(() => {
     axios
-      .post(`${process.env.REACT_APP_URL}/api/cart/${userId}/update/${detail.id}`, {
+      .post(`https://klimty.onrender.com/api/cart/${userId}/update/${detail.id}`, {
         products: cart,
       })
       .catch((err) => console.error(err));

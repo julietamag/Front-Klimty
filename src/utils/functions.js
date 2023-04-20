@@ -17,7 +17,7 @@ export const signUp = (auth, email, password, name, lastName) => {
   createUserWithEmailAndPassword(auth, email, password).then(() => {
     sendEmailVerification(auth.currentUser).then(() => {
       const { uid } = auth.currentUser;
-      axios.post(`${process.env.REACT_APP_URL}/api/user`, {
+      axios.post(`https://klimty.onrender.com/api/user`, {
         name,
         lastName,
         email,
@@ -36,7 +36,7 @@ export const logIn = (auth, email, password) => {
       toast.error("your email is not verified");
       signOut(auth);
     } else {
-      axios.get(`${process.env.REACT_APP_URL}/api/user`).then((users) => {
+      axios.get(`https://klimty.onrender.com/api/user`).then((users) => {
         onAuthStateChanged(auth, (userF) => {
           const userFilter = users.data.filter((user) => {
             return user.uid === userF.uid;
@@ -54,7 +54,7 @@ export const signUpGoogle = (auth) => {
     //busco todos los usuarios
 
     axios
-      .get(`${process.env.REACT_APP_URL}/api/user`)
+      .get(`https://klimty.onrender.com/api/user`)
       .then((users) => {
         onAuthStateChanged(auth, (userF) => {
           const userFilter = users.data.filter((user) => {
@@ -66,7 +66,7 @@ export const signUpGoogle = (auth) => {
             const lastName = res.user.displayName.split(" ")[1];
             const { email, uid } = res.user;
 
-            axios.post(`${process.env.REACT_APP_URL}/api/user`, {
+            axios.post(`https://klimty.onrender.com/api/user`, {
               name,
               lastName,
               email,
@@ -76,7 +76,7 @@ export const signUpGoogle = (auth) => {
         });
       })
       .then(() => {
-        axios.get(`${process.env.REACT_APP_URL}/api/user`).then((users) => {
+        axios.get(`https://klimty.onrender.com/api/user`).then((users) => {
           onAuthStateChanged(auth, (userF) => {
             const userFilter = users.data.filter((user) => {
               return user.uid === userF.uid;
@@ -94,7 +94,7 @@ export const signUpFacebook = (auth) => {
     //busco todos los usuarios
 
     axios
-      .get(`${process.env.REACT_APP_URL}/api/user`)
+      .get(`https://klimty.onrender.com/api/user`)
       .then((users) => {
         onAuthStateChanged(auth, (userF) => {
           const userFilter = users.data.filter((user) => {
@@ -106,7 +106,7 @@ export const signUpFacebook = (auth) => {
             const lastName = res.user.displayName.split(" ")[1];
             const { email, uid } = res.user;
 
-            axios.post(`${process.env.REACT_APP_URL}/api/user`, {
+            axios.post(`https://klimty.onrender.com/api/user`, {
               name,
               lastName,
               email,
@@ -116,7 +116,7 @@ export const signUpFacebook = (auth) => {
         });
       })
       .then(() => {
-        axios.get(`${process.env.REACT_APP_URL}/api/user`).then((users) => {
+        axios.get(`https://klimty.onrender.com/api/user`).then((users) => {
           onAuthStateChanged(auth, (userF) => {
             const userFilter = users.data.filter((user) => {
               return user.uid === userF.uid;
@@ -130,7 +130,7 @@ export const signUpFacebook = (auth) => {
 };
 
 export const forgotPassword = (auth, email) => {
-  axios.get(`${process.env.REACT_APP_URL}/api/user`).then((users) => {
+  axios.get(`https://klimty.onrender.com/api/user`).then((users) => {
     const userFilter = users.data.filter((user) => {
       return user?.email === email;
     });

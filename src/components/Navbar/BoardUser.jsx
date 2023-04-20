@@ -44,12 +44,12 @@ export const BoardUser = () => {
   };
 
   useEffect(() => {
-    axios.get(`${process.env.REACT_APP_URL}/api/user/${userId}`)
+    axios.get(`https://klimty.onrender.com/api/user/${userId}`)
     .then((data) => setIsAdmin(data.data.isAdmin))
     onAuthStateChanged(auth, (user) => {
       dispath(setPhoto(user.photoURL))
       if (user.providerData[0].providerId === "password") {
-        axios.get(`${process.env.REACT_APP_URL}/api/user/${userId}`).then((data) => {
+        axios.get(`https://klimty.onrender.com/api/user/${userId}`).then((data) => {
           setName(data.data.fullName);
         });
       

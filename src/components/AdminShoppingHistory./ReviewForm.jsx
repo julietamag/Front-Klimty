@@ -13,7 +13,7 @@ const ReviewFormAdmin = ({ cart }) => {
     e.preventDefault();
 
     axios
-      .post(`${process.env.REACT_APP_URL}/api/user/${userId}/status/${cart.id}`, {
+      .post(`https://klimty.onrender.com/api/user/${userId}/status/${cart.id}`, {
         state,
       })
       .then(() => {
