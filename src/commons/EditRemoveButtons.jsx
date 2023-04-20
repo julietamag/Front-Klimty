@@ -15,19 +15,19 @@ export default function EditRemoveButtons({ item, openModal }) {
     const userId = localStorage.getItem("id");
     if (item.price) {
       return axios
-        .delete(`http://localhost:3001/api/product/${userId}/${item.id}`)
+        .delete(`${process.env.REACT_APP_URL}/api/product/${userId}/${item.id}`)
         .then((res) => {
           dispatch(setBooleano());
         });
     } else if (item.uid) {
       return axios
-        .delete(`http://localhost:3001/api/user/${userId}/delete/${item.id}`)
+        .delete(`${process.env.REACT_APP_URL}/api/user/${userId}/delete/${item.id}`)
         .then((res) => {
           dispatch(setBooleano());
         });
     } else if (item.title) {
       return axios
-        .delete(`http://localhost:3001/api/artist/${userId}/delete/${item.id}`)
+        .delete(`${process.env.REACT_APP_URL}/api/artist/${userId}/delete/${item.id}`)
         .then((res) => {
           dispatch(setBooleano());
         });

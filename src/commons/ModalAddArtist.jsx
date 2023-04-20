@@ -31,7 +31,7 @@ export default function ModalAddArtist() {
     if ((title, description)) {
       if (userId) {
         axios
-          .post(`http://localhost:3001/api/artist/${userId}/add`, {
+          .post(`${process.env.REACT_APP_URL}/api/artist/${userId}/add`, {
             title,
 
             description,

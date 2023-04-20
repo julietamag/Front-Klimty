@@ -14,14 +14,14 @@ export default function AdminViewProduct() {
 
   // Renderizado inicial de pagina.
   useEffect(() => {
-    axios.get("http://localhost:3001/api/product").then((res) => {
+    axios.get(`${process.env.REACT_APP_URL}/api/product`).then((res) => {
       const sortedData = res.data.sort((a, b) => a.id - b.id);
       setData(sortedData);
     });
   }, []);
 
   useEffect(() => {
-    axios.get("http://localhost:3001/api/product").then((res) => {
+    axios.get(`${process.env.REACT_APP_URL}/api/product`).then((res) => {
       const sortedData = res.data.sort((a, b) => a.id - b.id);
       setData(sortedData);
     });

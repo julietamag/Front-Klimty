@@ -44,7 +44,7 @@ export default function ModalAddProduct() {
     if ((price, name, artistId)) {
       if (userId) {
         axios
-          .post(`http://localhost:3001/api/product/${userId}/add/`, {
+          .post(`${process.env.REACT_APP_URL}/api/product/${userId}/add/`, {
             name,
             price,
             description,
@@ -71,7 +71,7 @@ export default function ModalAddProduct() {
   };
 
   useEffect(() => {
-    axios.get(`http://localhost:3001/api/artist`).then((data) => {
+    axios.get(`${process.env.REACT_APP_URL}/api/artist`).then((data) => {
       const artistsBack = data.data;
       const artists = artistsBack?.map((artist) => artist.title);
       setArtists(artists);

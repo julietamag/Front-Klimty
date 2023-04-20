@@ -15,7 +15,7 @@ export default function AdminViewArtist() {
 
   // Renderizado inicial de pagina.
   useEffect(() => {
-    axios.get("http://localhost:3001/api/artist").then((res) => {
+    axios.get(`${process.env.REACT_APP_URL}/api/artist`).then((res) => {
       const sortedData = res.data.sort((a, b) => a.id - b.id);
       setData(sortedData);
     });
@@ -23,7 +23,7 @@ export default function AdminViewArtist() {
 
   // Renderizado inicial de pagina.
   useEffect(() => {
-    axios.get("http://localhost:3001/api/artist").then((res) => {
+    axios.get(`${process.env.REACT_APP_URL}/api/artist`).then((res) => {
       const sortedData = res.data.sort((a, b) => a.id - b.id);
       setData(sortedData);
     });

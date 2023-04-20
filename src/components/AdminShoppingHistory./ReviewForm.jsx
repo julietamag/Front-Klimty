@@ -13,7 +13,7 @@ const ReviewFormAdmin = ({ cart }) => {
     e.preventDefault();
 
     axios
-      .post(`http://localhost:3001/api/user/${userId}/status/${cart.id}`, {
+      .post(`${process.env.REACT_APP_URL}/api/user/${userId}/status/${cart.id}`, {
         state,
       })
       .then(() => {

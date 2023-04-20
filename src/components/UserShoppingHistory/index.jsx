@@ -13,7 +13,7 @@ const ShoppingHistory = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3001/api/checkout/${userId}/history`)
+      .get(`${process.env.REACT_APP_URL}/api/checkout/${userId}/history`)
       .then((res) => setPurchase(res.data));
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
