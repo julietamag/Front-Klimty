@@ -13,7 +13,7 @@ export default function AdminViewUser() {
 
   // Renderizado inicial de pagina.
   useEffect(() => {
-    axios.get(`${process.env.REACT_APP_URL}/api/user`).then((res) => {
+    axios.get(`https://klimty.onrender.com/api/user`).then((res) => {
       const sortedData = res.data.sort((a, b) => a.id - b.id);
       setData(sortedData);
     });
@@ -21,7 +21,7 @@ export default function AdminViewUser() {
 
   // Renderizado inicial de pagina.
   useEffect(() => {
-    axios.get(`${process.env.REACT_APP_URL}/api/user`).then((res) => {
+    axios.get(`https://klimty.onrender.com/api/user`).then((res) => {
       const sortedData = res.data.sort((a, b) => a.id - b.id);
       setData(sortedData);
     });

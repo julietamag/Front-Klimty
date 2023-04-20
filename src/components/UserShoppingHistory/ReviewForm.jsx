@@ -23,7 +23,7 @@ const ReviewForm = ({ product }) => {
     }
 
     axios
-      .post(`${process.env.REACT_APP_URL}/api/review/${userId}/${productId}`, {
+      .post(`https://klimty.onrender.com/api/review/${userId}/${productId}`, {
         description,
         star,
       })

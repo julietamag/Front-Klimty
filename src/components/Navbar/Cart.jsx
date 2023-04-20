@@ -50,7 +50,7 @@ export const Cart = () => {
 
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_URL}/api/cart/${userId}`)
+      .get(`https://klimty.onrender.com/api/cart/${userId}`)
       .then((cart) => {
         dispatch(setAxiosCart(cart.data.products));
       })
@@ -62,7 +62,7 @@ export const Cart = () => {
     dispatch(addQuantity(item));
     axios
       .post(
-        `${process.env.REACT_APP_URL}/api/cart/${userId}/update/${item.product.id}`,
+        `https://klimty.onrender.com/api/cart/${userId}/update/${item.product.id}`,
         { products: cart }
       )
       .catch((err) => console.error(err));
@@ -72,7 +72,7 @@ export const Cart = () => {
     dispatch(minusQuantity(item));
     axios
       .post(
-        `${process.env.REACT_APP_URL}/api/cart/${userId}/update/${item.product.id}`,
+        `https://klimty.onrender.com/api/cart/${userId}/update/${item.product.id}`,
         { products: cart }
       )
       .catch((err) => console.error(err));
@@ -82,7 +82,7 @@ export const Cart = () => {
     dispatch(dropCart(item));
     axios
       .post(
-        `${process.env.REACT_APP_URL}/api/cart/${userId}/update/${item.product.id}`,
+        `https://klimty.onrender.com/api/cart/${userId}/update/${item.product.id}`,
         { products: cart }
       )
       .catch((err) => console.error(err));

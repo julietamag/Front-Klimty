@@ -30,7 +30,7 @@ export default function ListAdminArtist({ item }) {
 
     if (userId) {
       axios
-        .put(`${process.env.REACT_APP_URL}/api/artist/${userId}/edit/${item.id}`, {
+        .put(`https://klimty.onrender.com/api/artist/${userId}/edit/${item.id}`, {
           title,
           description,
         })

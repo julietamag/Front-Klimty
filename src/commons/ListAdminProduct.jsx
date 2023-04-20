@@ -44,7 +44,7 @@ export default function ListAdminProduct({ item }) {
     const userId = localStorage.getItem("id");
     if (productId && userId) {
       axios
-        .put(`${process.env.REACT_APP_URL}/api/product/${userId}/edit/${item.id}`, {
+        .put(`https://klimty.onrender.com/api/product/${userId}/edit/${item.id}`, {
           name,
           price,
           description,
