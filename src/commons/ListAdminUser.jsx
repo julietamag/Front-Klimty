@@ -38,7 +38,7 @@ export default function ListAdminUser({ item }) {
 
     if (userId) {
       axios
-        .put(`http://localhost:3001/api/user/${userId}/edit/${item.id}`, {
+        .put(`${process.env.REACT_APP_URL}/api/user/${userId}/edit/${item.id}`, {
           isAdmin,
         })
         .catch((error) => {

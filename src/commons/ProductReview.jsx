@@ -18,7 +18,7 @@ const ProductReview = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3001/api/review/product/${id}`)
+      .get(`${process.env.REACT_APP_URL}/api/review/product/${id}`)
       .then((data) => {
         if (data.data) {
           setReviews(data.data);

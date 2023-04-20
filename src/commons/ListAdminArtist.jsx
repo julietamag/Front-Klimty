@@ -30,7 +30,7 @@ export default function ListAdminArtist({ item }) {
 
     if (userId) {
       axios
-        .put(`http://localhost:3001/api/artist/${userId}/edit/${item.id}`, {
+        .put(`${process.env.REACT_APP_URL}/api/artist/${userId}/edit/${item.id}`, {
           title,
           description,
         })

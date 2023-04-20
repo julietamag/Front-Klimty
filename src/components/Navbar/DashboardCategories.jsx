@@ -25,7 +25,7 @@ const DashboardCategories = () => {
   const handleClose = (data) => {
     setAnchorEl(null);
     axios
-      .get(`http://localhost:3001/api/search/products/${data}`)
+      .get(`${process.env.REACT_APP_URL}/api/search/products/${data}`)
       .then((res) => {
         dispatch(setData(res.data));
       })
@@ -35,7 +35,7 @@ const DashboardCategories = () => {
   };
 
   useEffect(() => {
-    axios.get(`http://localhost:3001/api/search/${menu}`).then((data) => {
+    axios.get(`${process.env.REACT_APP_URL}/api/search/${menu}`).then((data) => {
       setCategories(data.data);
     });
   }, [menu]);

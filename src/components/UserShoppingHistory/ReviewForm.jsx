@@ -23,7 +23,7 @@ const ReviewForm = ({ product }) => {
     }
 
     axios
-      .post(`http://localhost:3001/api/review/${userId}/${productId}`, {
+      .post(`${process.env.REACT_APP_URL}/api/review/${userId}/${productId}`, {
         description,
         star,
       })

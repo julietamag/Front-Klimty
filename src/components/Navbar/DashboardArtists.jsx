@@ -12,7 +12,6 @@ import { setData } from "../../state/data";
 const DashboardArtists = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const type = useSelector((state) => state.type);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -24,7 +23,7 @@ const DashboardArtists = () => {
   const handleClose = (data) => {
     setAnchorEl(null);
     axios
-      .get(`http://localhost:3001/api/search/artworks/${data}`)
+      .get(`${process.env.REACT_APP_URL}/api/search/artworks/${data}`)
       .then((res) => {
         dispatch(setData(res.data));
       })
@@ -38,7 +37,7 @@ const DashboardArtists = () => {
   const menu = useSelector((state) => state.menu);
 
   useEffect(() => {
-    axios.get(`http://localhost:3001/api/${menu}`).then((data) => {
+    axios.get(`${process.env.REACT_APP_URL}/api/${menu}`).then((data) => {
       const artistsBack = data.data;
       const artists = artistsBack.map((artist) => artist.title);
       setArtists(artists);

@@ -34,17 +34,18 @@ const DetailsCard = () => {
   useEffect(() => {
     axios
       .get(
-        `http://localhost:3001/api/product/${location.pathname.split("/")[2]}`
+        `${process.env.REACT_APP_URL}/api/product/${location.pathname.split("/")[2]}`
       )
       .then((detail) => {
         setDetail(detail.data);
       })
       .catch((err) => console.error(err));
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     axios
-      .post(`http://localhost:3001/api/cart/${userId}/update/${detail.id}`, {
+      .post(`${process.env.REACT_APP_URL}/api/cart/${userId}/update/${detail.id}`, {
         products: cart,
       })
       .catch((err) => console.error(err));

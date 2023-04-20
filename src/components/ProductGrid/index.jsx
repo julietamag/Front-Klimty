@@ -17,7 +17,7 @@ export const ProductGrid = () => {
   useEffect(() => {
     if (menu === "general") {
       axios
-        .get("http://localhost:3001/api/product")
+        .get(`${process.env.REACT_APP_URL}/api/product`)
         .then((data) => dispatch(setData(data.data)));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

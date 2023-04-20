@@ -19,13 +19,14 @@ export const SearchInput = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3001/api/search/product?input=${search}`)
+      .get(`${process.env.REACT_APP_URL}/api/search/product?input=${search}`)
       .then((res) => {
         dispatch(setData(res.data));
       })
       .then(() => {
         navigate("/");
       });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [search]);
 
   return (
