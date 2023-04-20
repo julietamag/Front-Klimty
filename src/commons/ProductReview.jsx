@@ -18,7 +18,7 @@ const ProductReview = () => {
 
   useEffect(() => {
     axios
-      .get(`https://klimty.onrender.com/api/review/product/${id}`)
+      .get(`https://klimty.onrender.com/api/review/product/${id}`, {withCredentials: true})
       .then((data) => {
         if (data.data) {
           setReviews(data.data);

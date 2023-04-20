@@ -26,7 +26,7 @@ const ReviewForm = ({ product }) => {
       .post(`https://klimty.onrender.com/api/review/${userId}/${productId}`, {
         description,
         star,
-      })
+      }, {withCredentials: true})
       .then(() => {
         toast.success("Review added successfully");
       })

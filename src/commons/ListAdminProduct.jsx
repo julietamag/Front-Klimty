@@ -49,7 +49,7 @@ export default function ListAdminProduct({ item }) {
           price,
           description,
           category,
-        })
+        }, {withCredentials: true})
         .catch((error) => {
           console.error(error);
         });

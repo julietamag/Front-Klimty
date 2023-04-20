@@ -15,7 +15,7 @@ const ReviewFormAdmin = ({ cart }) => {
     axios
       .post(`https://klimty.onrender.com/api/user/${userId}/status/${cart.id}`, {
         state,
-      })
+      }, {withCredentials: true})
       .then(() => {
         toast.success("State changed successfully");
       })

@@ -35,7 +35,7 @@ export default function ModalAddArtist() {
             title,
 
             description,
-          })
+          }, {withCredentials: true})
           .catch((error) => {
             console.error(error);
           });

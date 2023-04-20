@@ -23,7 +23,7 @@ const DashboardArtists = () => {
   const handleClose = (data) => {
     setAnchorEl(null);
     axios
-      .get(`https://klimty.onrender.com/api/search/artworks/${data}`)
+      .get(`https://klimty.onrender.com/api/search/artworks/${data}`, {withCredentials: true})
       .then((res) => {
         dispatch(setData(res.data));
       })
@@ -37,7 +37,7 @@ const DashboardArtists = () => {
   const menu = useSelector((state) => state.menu);
 
   useEffect(() => {
-    axios.get(`https://klimty.onrender.com/api/${menu}`).then((data) => {
+    axios.get(`https://klimty.onrender.com/api/${menu}`, {withCredentials: true}).then((data) => {
       const artistsBack = data.data;
       const artists = artistsBack.map((artist) => artist.title);
       setArtists(artists);

@@ -57,7 +57,7 @@ export default function Checkout() {
     }
     if (activeStep === 2) {
       axios
-        .post(`https://klimty.onrender.com/api/checkout/${userId}`, { checkout })
+        .post(`https://klimty.onrender.com/api/checkout/${userId}`, { checkout }, {withCredentials: true})
         .then((checkoutFinal) => {
           dispatch(
             resetCheckout({

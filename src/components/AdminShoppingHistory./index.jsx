@@ -14,7 +14,7 @@ const AdminShoppingHistory = () => {
 
   useEffect(() => {
     axios
-      .get(`https://klimty.onrender.com/api/checkout/${id}/history`)
+      .get(`https://klimty.onrender.com/api/checkout/${id}/history`, {withCredentials: true})
       .then((res) => setPurchase(res.data));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

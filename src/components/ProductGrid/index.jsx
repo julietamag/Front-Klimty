@@ -17,7 +17,7 @@ export const ProductGrid = () => {
   useEffect(() => {
     if (menu === "general") {
       axios
-        .get(`https://klimty.onrender.com/api/product`)
+        .get(`https://klimty.onrender.com/api/product`, {withCredentials: true})
         .then((data) => dispatch(setData(data.data)));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
