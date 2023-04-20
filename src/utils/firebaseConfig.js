@@ -6,14 +6,23 @@ import {
 } from "firebase/auth";
 import { getStorage } from "firebase/storage";
 
+const {
+  REACT_APP_FIREBASE_KEY,
+  REACT_APP_AUTH_DOMAIN,
+  REACT_APP_PROJECT_ID,
+  REACT_APP_STORAGE_BUCKET,
+  REACT_APP_MESSAGING_SENDER_ID,
+  REACT_APP_APP_ID,
+} = process.env;
+
 const firebaseConfig = {
-  apiKey: "AIzaSyBFGJRkS0dNDOSYjj0ZtTAh4-TbIsQFesI",
-  authDomain: "klimty-93d1f.firebaseapp.com",
-  projectId: "klimty-93d1f",
-  storageBucket: "klimty-93d1f.appspot.com",
-  messagingSenderId: "197007393503",
-  appId: "1:197007393503:web:1053a978d8ce2717e7df6a",
-  measurementId: "G-64473D3Q3W",
+  apiKey: REACT_APP_FIREBASE_KEY,
+  authDomain: REACT_APP_AUTH_DOMAIN,
+  projectId: REACT_APP_PROJECT_ID,
+  storageBucket: REACT_APP_STORAGE_BUCKET,
+  messagingSenderId: REACT_APP_MESSAGING_SENDER_ID,
+  appId: REACT_APP_APP_ID,
+  measurementId: "G-PYWE846JY7",
 };
 
 const app = initializeApp(firebaseConfig);
