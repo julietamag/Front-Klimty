@@ -12,7 +12,7 @@ const Profile = () => {
   const [file, setFile] = useState(null);
   const photo = useSelector((state) => state.photo);
   const [name, setName] = useState("");
-  const dispath = useDispatch();
+  const dispatch = useDispatch();
   const [update, setUpdate] = useState("");
   const [change, setChange] = useState(true);
   const [email, setEmail] = useState("");
@@ -31,7 +31,7 @@ const Profile = () => {
     onAuthStateChanged(auth, (user) => {
       setName(user.displayName);
       setEmail(user.email);
-      dispath(setPhoto(user.photoURL));
+      dispatch(setPhoto(user.photoURL));
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [update]);

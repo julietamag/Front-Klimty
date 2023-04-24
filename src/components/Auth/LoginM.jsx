@@ -8,24 +8,21 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useState } from "react";
-import { logIn, signUpGoogle, forgotPassword, signUpFacebook } from "../../utils/functions";
+import { logIn, signUpGoogle, forgotPassword } from "../../utils/functions";
 import { auth } from "../../utils/firebaseConfig";
 import GoogleIcon from "@mui/icons-material/Google";
-import FacebookIcon from "@mui/icons-material/Facebook";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export const LoginM = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate()
   const handleLogIn = (e) => {
     e.preventDefault();
-    logIn(auth, email, password);
+    logIn(auth, email, password, () => navigate('/'));
   };
   const handleSignUpGoogle = () => {
-    signUpGoogle(auth);
-  };
-  const handleSignUpFacebook = () => {
-    signUpFacebook(auth);
+    signUpGoogle(auth, () => navigate('/'))
   };
 
 
@@ -46,7 +43,7 @@ export const LoginM = () => {
         }}
       >
         <Typography component="h1" variant="h5">
-          Log in
+          Login
         </Typography>
         <Box component="form" onSubmit={handleLogIn} noValidate sx={{ mt: 1 }}>
           <TextField
@@ -79,23 +76,16 @@ export const LoginM = () => {
             sx={{ mt: 3, mb: 2 }}
             onClick={handleLogIn}
           >
-            Log In
+            Login
           </Button>
           <Button
             sx={{ mt: 3, mb: 2 }}
             fullWidth
             onClick={handleSignUpGoogle}
             variant="outlined"
+            startIcon={  <GoogleIcon />}
           >
-            <GoogleIcon /> {`   LogIn with Google`}
-          </Button>
-          <Button
-            sx={{ mt: 3, mb: 2 }}
-            fullWidth
-            onClick={handleSignUpFacebook}
-            variant="outlined"
-          >
-            <FacebookIcon /> LogIn with Facebook
+           Login with Google
           </Button>
           <Grid container>
             <Grid item xs>
@@ -108,7 +98,7 @@ export const LoginM = () => {
               </Link>
             </Grid>
             <Grid item>
-              <Link to="/signup">{"Don't have an account? Sign Up"}</Link>
+              <Link to="/signup">{"Don't have an account? Register"}</Link>
             </Grid>
           </Grid>
         </Box>

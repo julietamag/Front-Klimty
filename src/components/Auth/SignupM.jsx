@@ -48,7 +48,7 @@ export const SignupM = () => {
             required
             fullWidth
             id="name"
-            label="name"
+            label="Name"
             name="name"
             autoComplete="name"
             autoFocus
@@ -59,7 +59,7 @@ export const SignupM = () => {
             required
             fullWidth
             id="lastName"
-            label="lastName"
+            label="Last Name"
             name="lastName"
             autoComplete="lastName"
             autoFocus
@@ -104,14 +104,6 @@ export const SignupM = () => {
             variant="outlined"
           >
             <GoogleIcon /> SignUp with Google
-          </Button>
-          <Button
-            sx={{ mt: 3, mb: 2 }}
-            fullWidth
-            onClick={handleSignUpFacebook}
-            variant="outlined"
-          >
-            <FacebookIcon /> SignUp with Facebook
           </Button>
         </Box>
       </Box>
