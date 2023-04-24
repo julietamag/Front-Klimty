@@ -1,6 +1,7 @@
 import {
   Avatar,
   Box,
+  Button,
   IconButton,
   Menu,
   MenuItem,
@@ -17,14 +18,15 @@ import { logOut } from "../../utils/functions";
 import { setUid } from "../../state/uid";
 import { setPhoto } from "../../state/photo";
 import { useDispatch, useSelector } from "react-redux";
+import LoginIcon from '@mui/icons-material/Login';
 
 export const BoardUser = () => {
   const photo = useSelector((state) => state.photo);
   const [name, setName] = useState("");
-  const dispath = useDispatch();
+  const dispatch = useDispatch();
   const [anchorElUser, setAnchorElUser] = useState(null);
-  const userId = localStorage.getItem("id");
   const [isAdmin, setIsAdmin] = useState(false);
+  const [userId, setUserId] = useState(localStorage.getItem("id"))
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
@@ -35,19 +37,20 @@ export const BoardUser = () => {
 
   const handleLogOut = () => {
     logOut(auth);
-    dispath(setUid(""));
-    dispath(
+    dispatch(setUid(""));
+    dispatch(
       setPhoto(
         "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
       )
-    );
+      );
+      setName('')
   };
 
   useEffect(() => {
     axios.get(`https://klimty.onrender.com/api/user/${userId}`, {withCredentials: true})
     .then((data) => setIsAdmin(data.data.isAdmin))
     onAuthStateChanged(auth, (user) => {
-      dispath(setPhoto(user.photoURL))
+      dispatch(setPhoto(user.photoURL))
       if (user.providerData[0].providerId === "password") {
         axios.get(`https://klimty.onrender.com/api/user/${userId}`, {withCredentials: true}).then((data) => {
           setName(data.data.fullName);
@@ -56,21 +59,30 @@ export const BoardUser = () => {
       } else if (user.providerData[0].providerId === "google.com") {
         setName(user.displayName);
       }
-      
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+
+  }, [dispatch, userId]);
+
+  useEffect(()=> {
+     setUserId(localStorage.getItem("id"))
+  }, [dispatch, name])
 
   return (
     <Box sx={{ flexGrow: 0 }}>
-      <Tooltip title="Open settings">
+      <Tooltip title="Open User Settings">
         <IconButton
           onClick={handleOpenUserMenu}
           color="secondary"
           sx={{ p: 0 }}
         >
-          <Avatar alt={`${name}`} src={`${photo}`} />
-          <Typography sx={{ ml: 2 }}>{`${name?.split(" ")[0]}`}</Typography>
+          {userId ? (
+<>
+            <Avatar alt={`${name}`} src={`${photo}`} />
+            <Typography sx={{ ml: 2 }}>{`${name?.split(" ")[0]}`}</Typography>
+</>
+          ) : (
+            <Button variant="contained" color="secondary"><LoginIcon /></Button>
+          )}
         </IconButton>
       </Tooltip>
       <Menu
@@ -107,7 +119,7 @@ export const BoardUser = () => {
         ) : (
           <MenuList>
             <Link style={{ textDecoration: "none", color: "#000" }} to="signup">
-              <MenuItem onClick={handleCloseUserMenu}>Signup</MenuItem>
+              <MenuItem onClick={handleCloseUserMenu}>Register</MenuItem>
             </Link>
             <Link style={{ textDecoration: "none", color: "#000" }} to="login">
               <MenuItem onClick={handleCloseUserMenu}>Login</MenuItem>

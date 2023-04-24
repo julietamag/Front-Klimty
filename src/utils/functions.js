@@ -29,7 +29,7 @@ export const signUp = (auth, email, password, name, lastName) => {
   });
 };
 
-export const logIn = (auth, email, password) => {
+export const logIn = (auth, email, password, redirectCb) => {
   signInWithEmailAndPassword(auth, email, password).then((res) => {
     if (!res.user.emailVerified) {
       sendEmailVerification(res.user.auth.currentUser);
@@ -45,11 +45,12 @@ export const logIn = (auth, email, password) => {
         });
       });
       toast.success("Successfully Logged In !");
+      redirectCb()
     }
   });
 };
 
-export const signUpGoogle = (auth) => {
+export const signUpGoogle = (auth, redirectCb) => {
   signInWithPopup(auth, providerGoogle).then((res) => {
     //busco todos los usuarios
 
@@ -85,6 +86,7 @@ export const signUpGoogle = (auth) => {
           });
         });
         toast.success("Successfully Logged In !");
+        redirectCb()
       });
   });
 };

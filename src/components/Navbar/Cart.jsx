@@ -8,6 +8,7 @@ import {
   ImageListItemBar,
   Typography,
   IconButton,
+  Badge,
 } from "@mui/material";
 import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
 import React, { Fragment, useEffect, useState } from "react";
@@ -50,7 +51,9 @@ export const Cart = () => {
 
   useEffect(() => {
     axios
-      .get(`https://klimty.onrender.com/api/cart/${userId}`, {withCredentials: true})
+      .get(`https://klimty.onrender.com/api/cart/${userId}`, {
+        withCredentials: true,
+      })
       .then((cart) => {
         dispatch(setAxiosCart(cart.data.products));
       })
@@ -63,7 +66,8 @@ export const Cart = () => {
     axios
       .post(
         `https://klimty.onrender.com/api/cart/${userId}/update/${item.product.id}`,
-        { products: cart }, {withCredentials: true}
+        { products: cart },
+        { withCredentials: true }
       )
       .catch((err) => console.error(err));
   }
@@ -73,7 +77,8 @@ export const Cart = () => {
     axios
       .post(
         `https://klimty.onrender.com/api/cart/${userId}/update/${item.product.id}`,
-        { products: cart }, {withCredentials: true}
+        { products: cart },
+        { withCredentials: true }
       )
       .catch((err) => console.error(err));
   }
@@ -83,7 +88,8 @@ export const Cart = () => {
     axios
       .post(
         `https://klimty.onrender.com/api/cart/${userId}/update/${item.product.id}`,
-        { products: cart }, {withCredentials: true}
+        { products: cart },
+        { withCredentials: true }
       )
       .catch((err) => console.error(err));
   }
@@ -158,20 +164,30 @@ export const Cart = () => {
           alignContent: "center",
         }}
       >
-        <Button
-          sx={{ fontSize: "1.5rem" }}
-          onClick={() => !userId ?  navigate("/login") : navigate('/checkout')}
-        >
-          {"CHECKOUT"}
-        </Button>
-        <Typography
-          variant="subtitle1"
-          sx={{ fontWeight: "bold", fontSize: "2rem" }}
-        >
-          {cart?.reduce((acc, item) => {
-            return acc + item.product.price * item.quantity;
-          }, 0)}
-        </Typography>
+        {cart.length > 0 ? (
+          <>
+            <Button
+              sx={{ fontSize: "1.5rem" }}
+              onClick={() =>
+                !userId ? navigate("/login") : navigate("/checkout")
+              }
+            >
+              {"CHECKOUT"}
+            </Button>
+            <Typography
+              variant="subtitle1"
+              sx={{ fontWeight: "bold", fontSize: "2rem" }}
+            >
+              {cart?.reduce((acc, item) => {
+                return acc + item.product.price * item.quantity;
+              }, 0)}
+            </Typography>
+          </>
+        ) : (
+          <>
+            <Typography sx={{p:2, fontWeight: 'bold'}}>Looks like your cart is empty... </Typography>
+          </>
+        )}
       </List>
     </Box>
   );
@@ -181,7 +197,9 @@ export const Cart = () => {
       {["right"].map((anchor) => (
         <React.Fragment key={"right"}>
           <Button color="secondary" onClick={toggleDrawer("right", true)}>
-            {<ShoppingBasketIcon />}
+          <Badge badgeContent={cart?.length} color="secondary">
+            <ShoppingBasketIcon />
+          </Badge>
           </Button>
           <SwipeableDrawer
             anchor={"right"}
