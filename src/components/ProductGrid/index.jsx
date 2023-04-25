@@ -34,8 +34,8 @@ export const ProductGrid = () => {
           <div key={index}>
             <img
               onClick={(e) => handleProductClick(e, item)}
-              src={`${item.photo_url}?w=162&auto=format`}
-              srcSet={`${item.photo_url}?w=162&auto=format&dpr=2 2x`}
+              src={`${item.photo_url}`}
+              srcSet={`${item.photo_url}`}
               alt={item.name}
               loading="lazy"
               style={{

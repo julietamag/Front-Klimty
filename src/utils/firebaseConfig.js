@@ -29,4 +29,4 @@ const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const providerGoogle = new GoogleAuthProvider();
 export const providerFacebook = new FacebookAuthProvider();
-export const storage = getStorage(app, 'gs://klimty-7576a.appspot.com/');
+export const storage = getStorage(app);
