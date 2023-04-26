@@ -1,6 +1,6 @@
 import { Masonry } from "@mui/lab";
 import { Box } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import { setData } from "../../state/data";
