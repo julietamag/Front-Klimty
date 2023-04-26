@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { ProductGrid } from "../ProductGrid";
-import { Grid } from "@mui/material";
+import { Grid, LinearProgress } from "@mui/material";
+import { useSelector } from "react-redux";
 
 export const Home = () => {
+  const data = useSelector((state) => state.data);
   return (
     <Grid
       container
@@ -14,7 +16,7 @@ export const Home = () => {
         xs={12}
         sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}
       >
-        <ProductGrid />
+        {data.length > 0 ? <ProductGrid /> : <LinearProgress />}
       </Grid>
     </Grid>
   );
