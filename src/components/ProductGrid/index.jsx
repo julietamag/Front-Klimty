@@ -1,6 +1,6 @@
 import { Masonry } from "@mui/lab";
-import { Box } from "@mui/material";
-import React, { useEffect } from "react";
+import { Box, LinearProgress } from "@mui/material";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import { setData } from "../../state/data";
@@ -13,6 +13,7 @@ export const ProductGrid = () => {
   const data = useSelector((state) => state.data);
   const menu = useSelector((state) => state.menu);
   const page = useSelector((state) => state.page);
+  const [loader, setLoader] = useState(true)
 
   useEffect(() => {
     if (menu === "general") {
@@ -20,6 +21,7 @@ export const ProductGrid = () => {
         .get(`https://klimty.onrender.com/api/product`, {withCredentials: true})
         .then((data) => dispatch(setData(data.data)));
     }
+    setLoader(false)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -29,6 +31,10 @@ export const ProductGrid = () => {
 
   return (
     <Box sx={{ margin: 2, width: "100%", display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection:'column' }}>
+      { loader ? (
+        <LinearProgress />
+      ):(
+        <>
       <Masonry columns={{ xs: 1, sm: 2, md: 3, lg: 4 }} spacing={5}>
         {data?.slice((page - 1) * 10, page * 10).map((item, index) => (
           <div key={index}>
@@ -44,13 +50,15 @@ export const ProductGrid = () => {
                 display: "block",
                 width: "100%",
               }}
-            />
+              />
           </div>
         ))}
       </Masonry>
-
       <NumPag />
+        </>
+      )
 
+}
     </Box>
   );
 };
