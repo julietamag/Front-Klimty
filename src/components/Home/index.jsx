@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 import { ProductGrid } from "../ProductGrid";
 import { Grid, LinearProgress } from "@mui/material";
@@ -16,7 +16,7 @@ export const Home = () => {
         xs={12}
         sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}
       >
-        {data.length > 0 ? <ProductGrid /> : <LinearProgress />}
+        {data.length === 0 ? <LinearProgress /> : <ProductGrid /> }
       </Grid>
     </Grid>
   );
