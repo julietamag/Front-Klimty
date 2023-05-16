@@ -1,6 +1,6 @@
 import { Masonry } from "@mui/lab";
 import { Box, LinearProgress } from "@mui/material";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import { setData } from "../../state/data";
@@ -10,10 +10,10 @@ import { NumPag } from "./NumPag";
 export const ProductGrid = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(true);
   const data = useSelector((state) => state.data);
   const menu = useSelector((state) => state.menu);
   const page = useSelector((state) => state.page);
-  const cart = useSelector((state) => state.setAxiosCart);
 
   useEffect(() => {
     if (menu === "general") {
@@ -21,7 +21,10 @@ export const ProductGrid = () => {
         .get(`https://klimty.onrender.com/api/product`, {
           withCredentials: true,
         })
-        .then((data) => dispatch(setData(data.data)));
+        .then((response) => {
+          dispatch(setData(response.data));
+          setIsLoading(false);
+        });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -31,20 +34,20 @@ export const ProductGrid = () => {
   }
 
   return (
-    <>
-      {!data || !cart || !menu ? (
+    <Box
+      sx={{
+        margin: 2,
+        width: "100%",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        flexDirection: "column",
+      }}
+    >
+      {isLoading ? (
         <LinearProgress />
       ) : (
-        <Box
-          sx={{
-            margin: 2,
-            width: "100%",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            flexDirection: "column",
-          }}
-        >
+        <>
           <Masonry columns={{ xs: 1, sm: 2, md: 3, lg: 4 }} spacing={5}>
             {data?.slice((page - 1) * 10, page * 10).map((item, index) => (
               <div key={index}>
@@ -65,8 +68,8 @@ export const ProductGrid = () => {
             ))}
           </Masonry>
           <NumPag />
-        </Box>
+        </>
       )}
-    </>
+    </Box>
   );
 };
