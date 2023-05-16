@@ -15,8 +15,11 @@ import { HomeAdmin } from "./components/Admin/HomeAdmin";
 import AdminViewProduct from "./components/Admin/AdminViewProduct";
 import AdminViewArtist from "./components/Admin/AdminViewArtist";
 import AdminShoppingHistory from "./components/AdminShoppingHistory.";
+import { useSelector } from "react-redux";
+import { LinearProgress } from "@mui/material";
 
 function App() {
+  const data = useSelector((state) => state.data);
   return (
     <>
       <div>
@@ -24,7 +27,10 @@ function App() {
       </div>
       <Navbar />
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route
+          path="/"
+          element={!data.length ? <LinearProgress /> : <Home />}
+        />
         <Route path="/profile" element={<Profile />} />
         <Route path="/login" element={<LoginM />} />
         <Route path="/product/:id" element={<DetailsCard />} />
@@ -33,9 +39,11 @@ function App() {
         <Route path="/admin" element={<HomeAdmin />} />
         <Route path="/admin/product" element={<AdminViewProduct />} />
         <Route path="/admin/user" element={<AdminViewUser />} />
-        <Route path="/admin/user/history/:id" element={<AdminShoppingHistory />} />
+        <Route
+          path="/admin/user/history/:id"
+          element={<AdminShoppingHistory />}
+        />
         <Route path="/admin/artist" element={<AdminViewArtist />} />
-
 
         <Route path="*" element={<ErrorPage />} />
       </Routes>
