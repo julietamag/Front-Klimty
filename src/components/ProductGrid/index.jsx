@@ -1,5 +1,5 @@
 import { Masonry } from "@mui/lab";
-import { Box } from "@mui/material";
+import { Box, LinearProgress } from "@mui/material";
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
@@ -13,6 +13,7 @@ export const ProductGrid = () => {
   const data = useSelector((state) => state.data);
   const menu = useSelector((state) => state.menu);
   const page = useSelector((state) => state.page);
+  const cart = useSelector((state) => state.setAxiosCart);
 
   useEffect(() => {
     if (menu === "general") {
@@ -30,36 +31,42 @@ export const ProductGrid = () => {
   }
 
   return (
-    <Box
-      sx={{
-        margin: 2,
-        width: "100%",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        flexDirection: "column",
-      }}
-    >
-      <Masonry columns={{ xs: 1, sm: 2, md: 3, lg: 4 }} spacing={5}>
-        {data?.slice((page - 1) * 10, page * 10).map((item, index) => (
-          <div key={index}>
-            <img
-              onClick={(e) => handleProductClick(e, item)}
-              src={`${item.photo_url}`}
-              srcSet={`${item.photo_url}`}
-              alt={item.name}
-              loading="lazy"
-              style={{
-                borderBottomLeftRadius: 4,
-                borderBottomRightRadius: 4,
-                display: "block",
-                width: "100%",
-              }}
-            />
-          </div>
-        ))}
-      </Masonry>
-      <NumPag />
-    </Box>
+    <>
+      {!data || !cart || !menu ? (
+        <LinearProgress />
+      ) : (
+        <Box
+          sx={{
+            margin: 2,
+            width: "100%",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            flexDirection: "column",
+          }}
+        >
+          <Masonry columns={{ xs: 1, sm: 2, md: 3, lg: 4 }} spacing={5}>
+            {data?.slice((page - 1) * 10, page * 10).map((item, index) => (
+              <div key={index}>
+                <img
+                  onClick={(e) => handleProductClick(e, item)}
+                  src={`${item.photo_url}`}
+                  srcSet={`${item.photo_url}`}
+                  alt={item.name}
+                  loading="lazy"
+                  style={{
+                    borderBottomLeftRadius: 4,
+                    borderBottomRightRadius: 4,
+                    display: "block",
+                    width: "100%",
+                  }}
+                />
+              </div>
+            ))}
+          </Masonry>
+          <NumPag />
+        </Box>
+      )}
+    </>
   );
 };
